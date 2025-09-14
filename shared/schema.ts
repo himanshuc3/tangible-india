@@ -18,3 +18,10 @@ export const searchQuerySchema = z.object({
 });
 
 export type SearchQuery = z.infer<typeof searchQuerySchema>;
+
+// New type for grouped facts by number
+export type NumberFacts = {
+  number: number | string;
+  facts: Fact[];
+  isSpecial: boolean; // True if any fact in the group is special
+};

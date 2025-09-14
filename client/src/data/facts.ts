@@ -1,4 +1,4 @@
-import type { Fact } from "@shared/schema";
+import type { Fact, NumberFacts } from "@shared/schema";
 
 //todo: remove mock functionality
 export const mockFacts: Fact[] = [
@@ -109,6 +109,35 @@ export const mockFacts: Fact[] = [
     category: "achievement",
     source: "UN Population Division 2023",
     isSpecial: true
+  },
+  // Multiple facts for number 7 - demonstrating the multi-fact feature
+  {
+    id: "13",
+    number: 7,
+    title: "Seven Sacred Rivers",
+    description: "India reveres seven sacred rivers: Ganga, Yamuna, Godavari, Saraswati, Narmada, Sindhu, and Kaveri. These rivers are considered goddesses and are central to Hindu spirituality, with millions of pilgrims visiting their banks annually.",
+    category: "cultural",
+    source: "Hindu Scriptures",
+    isSpecial: false
+  },
+  {
+    id: "14",
+    number: 7,
+    title: "The Seven Sisters",
+    description: "Northeast India's seven states - Assam, Arunachal Pradesh, Manipur, Meghalaya, Mizoram, Nagaland, and Tripura - are called the 'Seven Sisters'. This region hosts over 200 tribes speaking 400+ dialects, making it India's most ethnically diverse region.",
+    category: "cultural",
+    source: "Northeast India Cultural Survey",
+    isSpecial: false
+  },
+  // Multiple facts for number 3
+  {
+    id: "15",
+    number: 3,
+    title: "Three Branches of Government",
+    description: "India's democracy operates through three branches: Executive (Prime Minister and Council of Ministers), Legislative (Parliament with Lok Sabha and Rajya Sabha), and Judiciary (Supreme Court and High Courts). This separation ensures checks and balances.",
+    category: "historical",
+    source: "Constitution of India",
+    isSpecial: false
   }
 ];
 
@@ -140,4 +169,47 @@ export function getRandomFact(): Fact {
 
 export function getFactByNumber(number: number | string): Fact | undefined {
   return mockFacts.find(fact => fact.number.toString() === number.toString());
+}
+
+// New functions for handling multiple facts per number
+export function groupFactsByNumber(facts: Fact[]): NumberFacts[] {
+  const grouped = new Map<string, Fact[]>();
+  
+  // Group facts by normalized number string
+  facts.forEach(fact => {
+    const numberKey = fact.number.toString();
+    if (!grouped.has(numberKey)) {
+      grouped.set(numberKey, []);
+    }
+    grouped.get(numberKey)!.push(fact);
+  });
+  
+  // Convert to NumberFacts array and sort by numerical value
+  return Array.from(grouped.entries())
+    .map(([numberStr, factsArray]) => ({
+      number: numberStr.includes('.') ? parseFloat(numberStr) : parseInt(numberStr),
+      facts: factsArray,
+      isSpecial: factsArray.some(fact => fact.isSpecial)
+    }))
+    .sort((a, b) => {
+      const aNum = typeof a.number === 'string' ? parseFloat(a.number) : a.number;
+      const bNum = typeof b.number === 'string' ? parseFloat(b.number) : b.number;
+      return aNum - bNum;
+    });
+}
+
+export function getFactsByNumber(number: number | string): Fact[] {
+  return mockFacts.filter(fact => fact.number.toString() === number.toString());
+}
+
+export function getRandomNumberFacts(): { groupIndex: number; factIndex: number } {
+  const groups = groupFactsByNumber(mockFacts);
+  const groupIndex = Math.floor(Math.random() * groups.length);
+  const factIndex = Math.floor(Math.random() * groups[groupIndex].facts.length);
+  return { groupIndex, factIndex };
+}
+
+export function searchFactsGrouped(query: string, category?: string): NumberFacts[] {
+  const searchResults = searchFacts(query, category);
+  return groupFactsByNumber(searchResults);
 }
