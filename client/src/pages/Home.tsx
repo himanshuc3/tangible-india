@@ -1,23 +1,34 @@
 import { useState, useEffect } from "react";
+
+import Header from "@/components/Header";
 import NumberFactsCard from "@/components/NumberFactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
 import NumberInput from "@/components/NumberInput";
-import ThemeToggle from "@/components/ThemeToggle";
+
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
-import { mockFacts, groupFactsByNumber, searchFactsGrouped, getRandomNumberFacts, getFactsByNumber } from "@/data/facts";
+import {
+  mockFacts,
+  groupFactsByNumber,
+  searchFactsGrouped,
+  getRandomNumberFacts,
+  getFactsByNumber,
+} from "@/data/facts";
 import type { NumberFacts } from "@shared/schema";
 
 export default function Home() {
   // Initialize with grouped data
   const allNumberFacts = groupFactsByNumber(mockFacts);
-  
-  const [currentNumberFacts, setCurrentNumberFacts] = useState<NumberFacts>(allNumberFacts[0]);
+
+  const [currentNumberFacts, setCurrentNumberFacts] = useState<NumberFacts>(
+    allNumberFacts[0]
+  );
   const [currentNumberIndex, setCurrentNumberIndex] = useState(0);
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
-  const [searchResults, setSearchResults] = useState<NumberFacts[]>(allNumberFacts);
+  const [searchResults, setSearchResults] =
+    useState<NumberFacts[]>(allNumberFacts);
   const [isSearchMode, setIsSearchMode] = useState(false);
 
   // Handle search
@@ -25,13 +36,13 @@ export default function Home() {
     const results = searchFactsGrouped(query, category);
     setSearchResults(results);
     setIsSearchMode(true);
-    
+
     if (results.length > 0) {
       setCurrentNumberFacts(results[0]);
       setCurrentNumberIndex(0);
       setCurrentFactIndex(0);
     }
-    
+
     console.log(`Search results: ${results.length} number groups found`);
   };
 
@@ -62,7 +73,7 @@ export default function Home() {
     setCurrentNumberFacts(allNumberFacts[0]);
     setSearchResults(allNumberFacts);
     setIsSearchMode(false);
-    console.log('Reset to beginning');
+    console.log("Reset to beginning");
   };
 
   // Handle direct number navigation
@@ -72,18 +83,20 @@ export default function Home() {
       const numberFacts: NumberFacts = {
         number,
         facts,
-        isSpecial: facts.some(f => f.isSpecial)
+        isSpecial: facts.some((f) => f.isSpecial),
       };
       setCurrentNumberFacts(numberFacts);
       setCurrentFactIndex(0);
-      
+
       // Find the index in the current groups
       const groups = isSearchMode ? searchResults : allNumberFacts;
-      const groupIndex = groups.findIndex(g => g.number.toString() === number.toString());
+      const groupIndex = groups.findIndex(
+        (g) => g.number.toString() === number.toString()
+      );
       if (groupIndex >= 0) {
         setCurrentNumberIndex(groupIndex);
       }
-      
+
       setIsSearchMode(false);
       setSearchResults(allNumberFacts);
     } else {
@@ -95,20 +108,25 @@ export default function Home() {
   const handleRandomNumber = () => {
     const randomResult = getRandomNumberFacts();
     const groups = isSearchMode ? searchResults : allNumberFacts;
-    
+
     setCurrentNumberIndex(randomResult.groupIndex);
     setCurrentFactIndex(randomResult.factIndex);
     setCurrentNumberFacts(groups[randomResult.groupIndex]);
     setIsSearchMode(false);
     setSearchResults(allNumberFacts);
-    
-    console.log('Random fact selected:', groups[randomResult.groupIndex].facts[randomResult.factIndex].title);
+
+    console.log(
+      "Random fact selected:",
+      groups[randomResult.groupIndex].facts[randomResult.factIndex].title
+    );
   };
 
   // Handle fact change within a number group
   const handleFactChange = (factIndex: number) => {
     setCurrentFactIndex(factIndex);
-    console.log(`Switched to fact ${factIndex + 1} of number ${currentNumberFacts.number}`);
+    console.log(
+      `Switched to fact ${factIndex + 1} of number ${currentNumberFacts.number}`
+    );
   };
 
   const currentGroups = isSearchMode ? searchResults : allNumberFacts;
@@ -117,39 +135,21 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="text-3xl font-bold text-primary font-mono">
-                0
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">
-                  Tangible India
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                  A numerical journey through India's facts
-                </p>
-              </div>
-            </div>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 space-y-8 max-w-4xl">
         {/* Search Section */}
         <div className="space-y-6">
           <SearchBar onSearch={handleSearch} />
-          
+
           {isSearchMode && (
             <Card className="p-4">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium">
-                  Found {searchResults.length} number{searchResults.length !== 1 ? 's' : ''} with facts
+                  Found {searchResults.length} number
+                  {searchResults.length !== 1 ? "s" : ""} with facts
                 </span>
                 {searchResults.length > 0 && (
                   <Badge variant="secondary" className="ml-auto">
@@ -164,12 +164,12 @@ export default function Home() {
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (
           <div className="space-y-6">
-            <NumberFactsCard 
+            <NumberFactsCard
               numberFacts={currentNumberFacts}
               currentFactIndex={currentFactIndex}
               onFactChange={handleFactChange}
             />
-            
+
             {/* Navigation Controls */}
             <div className="grid md:grid-cols-2 gap-6">
               <ProgressIndicator
@@ -182,7 +182,7 @@ export default function Home() {
                 hasNext={currentNumberIndex < currentGroups.length - 1}
                 hasPrevious={currentNumberIndex > 0}
               />
-              
+
               <NumberInput
                 onNavigateToNumber={handleNavigateToNumber}
                 onRandomNumber={handleRandomNumber}
@@ -209,12 +209,19 @@ export default function Home() {
           <div className="text-center space-y-3">
             <h3 className="font-semibold text-lg">About Tangible India</h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Explore India through numbers, from Aryabhatta's revolutionary zero to the billion-plus population. 
-              Each number tells a story - historical, cultural, satirical, or statistical. 
-              Discover the tangible facts that make India unique!
+              Explore India through numbers, from Aryabhatta's revolutionary
+              zero to the billion-plus population. Each number tells a story -
+              historical, cultural, satirical, or statistical. Discover the
+              tangible facts that make India unique!
             </p>
             <div className="flex justify-center gap-2 flex-wrap">
-              {["historical", "cultural", "achievement", "statistical", "satirical"].map((category) => (
+              {[
+                "historical",
+                "cultural",
+                "achievement",
+                "statistical",
+                "satirical",
+              ].map((category) => (
                 <Badge key={category} variant="secondary" className="text-xs">
                   {category}
                 </Badge>
