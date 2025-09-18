@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import NumberDisplay from "@/components/NumberDisplay";
+import NumberFactsCard from "@/components/NumberFactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
 import NumberInput from "@/components/NumberInput";
@@ -7,82 +7,111 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
-import { mockFacts, searchFacts, getRandomFact, getFactByNumber } from "@/data/facts";
-import type { Fact } from "@shared/schema";
+import { mockFacts, groupFactsByNumber, searchFactsGrouped, getRandomNumberFacts, getFactsByNumber } from "@/data/facts";
+import type { NumberFacts } from "@shared/schema";
 
 export default function Home() {
-  const [currentFact, setCurrentFact] = useState<Fact>(mockFacts[0]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [searchResults, setSearchResults] = useState<Fact[]>(mockFacts);
+  // Initialize with grouped data
+  const allNumberFacts = groupFactsByNumber(mockFacts);
+  
+  const [currentNumberFacts, setCurrentNumberFacts] = useState<NumberFacts>(allNumberFacts[0]);
+  const [currentNumberIndex, setCurrentNumberIndex] = useState(0);
+  const [currentFactIndex, setCurrentFactIndex] = useState(0);
+  const [searchResults, setSearchResults] = useState<NumberFacts[]>(allNumberFacts);
   const [isSearchMode, setIsSearchMode] = useState(false);
 
   // Handle search
   const handleSearch = (query: string, category?: string) => {
-    const results = searchFacts(query, category);
+    const results = searchFactsGrouped(query, category);
     setSearchResults(results);
     setIsSearchMode(true);
     
     if (results.length > 0) {
-      setCurrentFact(results[0]);
-      setCurrentIndex(0);
+      setCurrentNumberFacts(results[0]);
+      setCurrentNumberIndex(0);
+      setCurrentFactIndex(0);
     }
     
-    console.log(`Search results: ${results.length} facts found`);
+    console.log(`Search results: ${results.length} number groups found`);
   };
 
-  // Handle navigation
+  // Handle navigation between number groups
   const handleNext = () => {
-    const facts = isSearchMode ? searchResults : mockFacts;
-    if (currentIndex < facts.length - 1) {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
-      setCurrentFact(facts[nextIndex]);
+    const groups = isSearchMode ? searchResults : allNumberFacts;
+    if (currentNumberIndex < groups.length - 1) {
+      const nextIndex = currentNumberIndex + 1;
+      setCurrentNumberIndex(nextIndex);
+      setCurrentNumberFacts(groups[nextIndex]);
+      setCurrentFactIndex(0); // Reset to first fact of next number
     }
   };
 
   const handlePrevious = () => {
-    const facts = isSearchMode ? searchResults : mockFacts;
-    if (currentIndex > 0) {
-      const prevIndex = currentIndex - 1;
-      setCurrentIndex(prevIndex);
-      setCurrentFact(facts[prevIndex]);
+    const groups = isSearchMode ? searchResults : allNumberFacts;
+    if (currentNumberIndex > 0) {
+      const prevIndex = currentNumberIndex - 1;
+      setCurrentNumberIndex(prevIndex);
+      setCurrentNumberFacts(groups[prevIndex]);
+      setCurrentFactIndex(0); // Reset to first fact of previous number
     }
   };
 
   const handleReset = () => {
-    setCurrentIndex(0);
-    setCurrentFact(mockFacts[0]);
-    setSearchResults(mockFacts);
+    setCurrentNumberIndex(0);
+    setCurrentFactIndex(0);
+    setCurrentNumberFacts(allNumberFacts[0]);
+    setSearchResults(allNumberFacts);
     setIsSearchMode(false);
     console.log('Reset to beginning');
   };
 
   // Handle direct number navigation
   const handleNavigateToNumber = (number: number | string) => {
-    const fact = getFactByNumber(number);
-    if (fact) {
-      setCurrentFact(fact);
-      const factIndex = mockFacts.findIndex(f => f.id === fact.id);
-      setCurrentIndex(factIndex);
+    const facts = getFactsByNumber(number);
+    if (facts.length > 0) {
+      const numberFacts: NumberFacts = {
+        number,
+        facts,
+        isSpecial: facts.some(f => f.isSpecial)
+      };
+      setCurrentNumberFacts(numberFacts);
+      setCurrentFactIndex(0);
+      
+      // Find the index in the current groups
+      const groups = isSearchMode ? searchResults : allNumberFacts;
+      const groupIndex = groups.findIndex(g => g.number.toString() === number.toString());
+      if (groupIndex >= 0) {
+        setCurrentNumberIndex(groupIndex);
+      }
+      
       setIsSearchMode(false);
-      setSearchResults(mockFacts);
+      setSearchResults(allNumberFacts);
     } else {
-      console.log(`No fact found for number: ${number}`);
+      console.log(`No facts found for number: ${number}`);
     }
   };
 
   // Handle random fact
   const handleRandomNumber = () => {
-    const randomFact = getRandomFact();
-    setCurrentFact(randomFact);
-    const factIndex = mockFacts.findIndex(f => f.id === randomFact.id);
-    setCurrentIndex(factIndex);
+    const randomResult = getRandomNumberFacts();
+    const groups = isSearchMode ? searchResults : allNumberFacts;
+    
+    setCurrentNumberIndex(randomResult.groupIndex);
+    setCurrentFactIndex(randomResult.factIndex);
+    setCurrentNumberFacts(groups[randomResult.groupIndex]);
     setIsSearchMode(false);
-    setSearchResults(mockFacts);
-    console.log('Random fact selected:', randomFact.title);
+    setSearchResults(allNumberFacts);
+    
+    console.log('Random fact selected:', groups[randomResult.groupIndex].facts[randomResult.factIndex].title);
   };
 
-  const currentFacts = isSearchMode ? searchResults : mockFacts;
+  // Handle fact change within a number group
+  const handleFactChange = (factIndex: number) => {
+    setCurrentFactIndex(factIndex);
+    console.log(`Switched to fact ${factIndex + 1} of number ${currentNumberFacts.number}`);
+  };
+
+  const currentGroups = isSearchMode ? searchResults : allNumberFacts;
   const maxNumber = 1400000000; // India's population
 
   return (
@@ -120,11 +149,11 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium">
-                  Found {searchResults.length} fact{searchResults.length !== 1 ? 's' : ''}
+                  Found {searchResults.length} number{searchResults.length !== 1 ? 's' : ''} with facts
                 </span>
                 {searchResults.length > 0 && (
                   <Badge variant="secondary" className="ml-auto">
-                    {currentIndex + 1} of {searchResults.length}
+                    Number {currentNumberIndex + 1} of {searchResults.length}
                   </Badge>
                 )}
               </div>
@@ -132,22 +161,26 @@ export default function Home() {
           )}
         </div>
 
-        {/* Current Fact Display */}
-        {currentFacts.length > 0 ? (
+        {/* Current Number Facts Display */}
+        {currentGroups.length > 0 ? (
           <div className="space-y-6">
-            <NumberDisplay fact={currentFact} />
+            <NumberFactsCard 
+              numberFacts={currentNumberFacts}
+              currentFactIndex={currentFactIndex}
+              onFactChange={handleFactChange}
+            />
             
             {/* Navigation Controls */}
             <div className="grid md:grid-cols-2 gap-6">
               <ProgressIndicator
-                currentNumber={currentFact.number}
-                totalNumbers={currentFacts.length}
-                currentIndex={currentIndex}
+                currentNumber={currentNumberFacts.number}
+                totalNumbers={currentGroups.length}
+                currentIndex={currentNumberIndex}
                 onNext={handleNext}
                 onPrevious={handlePrevious}
                 onReset={handleReset}
-                hasNext={currentIndex < currentFacts.length - 1}
-                hasPrevious={currentIndex > 0}
+                hasNext={currentNumberIndex < currentGroups.length - 1}
+                hasPrevious={currentNumberIndex > 0}
               />
               
               <NumberInput
