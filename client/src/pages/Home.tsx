@@ -105,7 +105,7 @@ export default function Home() {
   };
 
   // Handle random fact
-  const handleRandomNumber = () => {
+  const goToRandomFact = () => {
     const randomResult = getRandomNumberFacts();
     const groups = isSearchMode ? searchResults : allNumberFacts;
 
@@ -140,26 +140,13 @@ export default function Home() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8 space-y-8 max-w-4xl">
         {/* Search Section */}
-        <div className="space-y-6">
-          <SearchBar onSearch={handleSearch} />
-
-          {isSearchMode && (
-            <Card className="p-4">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium">
-                  Found {searchResults.length} number
-                  {searchResults.length !== 1 ? "s" : ""} with facts
-                </span>
-                {searchResults.length > 0 && (
-                  <Badge variant="secondary" className="ml-auto">
-                    Number {currentNumberIndex + 1} of {searchResults.length}
-                  </Badge>
-                )}
-              </div>
-            </Card>
-          )}
-        </div>
+        <SearchBar
+          onSearch={handleSearch}
+          isSearchMode={isSearchMode}
+          searchResults={searchResults}
+          currentNumberIndex={currentNumberIndex}
+          goToRandomFact={goToRandomFact}
+        />
 
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (
@@ -185,7 +172,7 @@ export default function Home() {
 
               <NumberInput
                 onNavigateToNumber={handleNavigateToNumber}
-                onRandomNumber={handleRandomNumber}
+                onRandomNumber={goToRandomFact}
                 maxNumber={maxNumber}
               />
             </div>

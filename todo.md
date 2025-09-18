@@ -5,6 +5,8 @@
 - Design:
   - Logo
   - Replace tailwind components with KendoReact
+- Functionality:
+  - Keyboard navigation
 - Show numbers (increment/decrement)
 - Support keyboard shortcuts
 - Progress bar on how much has been completed (1-1000)?
