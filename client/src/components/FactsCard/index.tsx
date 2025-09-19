@@ -13,14 +13,14 @@ interface NumberFactsCardProps {
   onFactChange?: (factIndex: number) => void;
 }
 
-export default function NumberFactsCard({ 
-  numberFacts, 
+export default function FactsCard({
+  numberFacts,
   currentFactIndex = 0,
-  onFactChange 
+  onFactChange,
 }: NumberFactsCardProps) {
   const [activeFactIndex, setActiveFactIndex] = useState(currentFactIndex);
   const { number, facts, isSpecial } = numberFacts;
-  
+
   const handleFactChange = (newIndex: number) => {
     setActiveFactIndex(newIndex);
     onFactChange?.(newIndex);
@@ -41,18 +41,25 @@ export default function NumberFactsCard({
   if (useCarousel) {
     // Carousel implementation for 5+ facts
     const currentFact = facts[activeFactIndex];
-    
+
     return (
       <div className="space-y-4">
         {/* Carousel Header */}
         <Card className="p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={`text-4xl font-bold font-mono ${isSpecial ? 'text-primary' : 'text-foreground'}`}>
+              <div
+                className={`text-4xl font-bold font-mono ${
+                  isSpecial ? "text-primary" : "text-foreground"
+                }`}
+              >
                 {number}
               </div>
               <div>
-                <Badge variant="secondary" data-testid={`badge-fact-count-${number}`}>
+                <Badge
+                  variant="secondary"
+                  data-testid={`badge-fact-count-${number}`}
+                >
                   {facts.length} facts
                 </Badge>
                 <div className="text-sm text-muted-foreground mt-1">
@@ -60,23 +67,29 @@ export default function NumberFactsCard({
                 </div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-1">
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => handleFactChange(Math.max(0, activeFactIndex - 1))}
+                onClick={() =>
+                  handleFactChange(Math.max(0, activeFactIndex - 1))
+                }
                 disabled={activeFactIndex === 0}
                 data-testid={`button-prev-fact-${number}`}
                 className="hover-elevate"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => handleFactChange(Math.min(facts.length - 1, activeFactIndex + 1))}
+                onClick={() =>
+                  handleFactChange(
+                    Math.min(facts.length - 1, activeFactIndex + 1)
+                  )
+                }
                 disabled={activeFactIndex === facts.length - 1}
                 data-testid={`button-next-fact-${number}`}
                 className="hover-elevate"
@@ -85,7 +98,7 @@ export default function NumberFactsCard({
               </Button>
             </div>
           </div>
-          
+
           {/* Dot indicators */}
           <div className="flex justify-center gap-1 mt-3">
             {facts.map((_, index) => (
@@ -93,14 +106,14 @@ export default function NumberFactsCard({
                 key={index}
                 onClick={() => handleFactChange(index)}
                 className={`w-2 h-2 rounded-full transition-all hover-elevate ${
-                  index === activeFactIndex ? 'bg-primary' : 'bg-muted'
+                  index === activeFactIndex ? "bg-primary" : "bg-muted"
                 }`}
                 data-testid={`dot-indicator-${number}-${index}`}
               />
             ))}
           </div>
         </Card>
-        
+
         {/* Current Fact Display */}
         <NumberDisplay fact={currentFact} />
       </div>
@@ -114,19 +127,26 @@ export default function NumberFactsCard({
       <Card className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className={`text-4xl font-bold font-mono ${isSpecial ? 'text-primary' : 'text-foreground'}`}>
+            <div
+              className={`text-4xl font-bold font-mono ${
+                isSpecial ? "text-primary" : "text-foreground"
+              }`}
+            >
               {number}
             </div>
-            <Badge variant="secondary" data-testid={`badge-fact-count-${number}`}>
+            <Badge
+              variant="secondary"
+              data-testid={`badge-fact-count-${number}`}
+            >
               {facts.length} facts
             </Badge>
           </div>
         </div>
       </Card>
-      
+
       {/* Tabs for Facts */}
-      <Tabs 
-        value={activeFactIndex.toString()} 
+      <Tabs
+        value={activeFactIndex.toString()}
         onValueChange={(value) => handleFactChange(parseInt(value))}
         data-testid={`tabs-facts-${number}`}
       >
@@ -142,7 +162,7 @@ export default function NumberFactsCard({
             </TabsTrigger>
           ))}
         </TabsList>
-        
+
         {facts.map((fact, index) => (
           <TabsContent key={fact.id} value={index.toString()}>
             <NumberDisplay fact={fact} />

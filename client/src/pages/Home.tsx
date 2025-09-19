@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Header from "@/components/Header";
-import NumberFactsCard from "@/components/NumberFactsCard";
+import FactsCard from "@/components/FactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
 import NumberInput from "@/components/NumberInput";
@@ -151,7 +151,7 @@ export default function Home() {
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (
           <div className="space-y-6">
-            <NumberFactsCard
+            <FactsCard
               numberFacts={currentNumberFacts}
               currentFactIndex={currentFactIndex}
               onFactChange={handleFactChange}
