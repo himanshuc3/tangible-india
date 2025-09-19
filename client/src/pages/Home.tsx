@@ -146,6 +146,18 @@ export default function Home() {
           currentNumberIndex={currentNumberIndex}
           goToRandomFact={goToRandomFact}
         />
+        <div>
+          <ProgressIndicator
+            currentNumber={currentNumberFacts.number}
+            totalNumbers={currentGroups.length}
+            currentIndex={currentNumberIndex}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+            onReset={handleReset}
+            hasNext={currentNumberIndex < currentGroups.length - 1}
+            hasPrevious={currentNumberIndex > 0}
+          />
+        </div>
 
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (
@@ -157,24 +169,6 @@ export default function Home() {
             />
 
             {/* Navigation Controls */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <ProgressIndicator
-                currentNumber={currentNumberFacts.number}
-                totalNumbers={currentGroups.length}
-                currentIndex={currentNumberIndex}
-                onNext={handleNext}
-                onPrevious={handlePrevious}
-                onReset={handleReset}
-                hasNext={currentNumberIndex < currentGroups.length - 1}
-                hasPrevious={currentNumberIndex > 0}
-              />
-
-              <NumberInput
-                onNavigateToNumber={handleNavigateToNumber}
-                onRandomNumber={goToRandomFact}
-                maxNumber={maxNumber}
-              />
-            </div>
           </div>
         ) : (
           <Card className="p-8 text-center">
