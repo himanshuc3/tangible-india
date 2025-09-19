@@ -5,9 +5,14 @@ export const factSchema = z.object({
   number: z.union([z.number(), z.string()]), // Supports both integers and decimals as strings
   title: z.string(),
   description: z.string(),
-  category: z.enum(["historical", "satirical", "achievement", "statistical", "cultural"]),
+  category: z.enum([
+    "historical",
+    "satirical",
+    "achievement",
+    "statistical",
+    "cultural",
+  ]),
   source: z.string().optional(),
-  isSpecial: z.boolean().default(false), // For highlighting special numbers like 0
 });
 
 export type Fact = z.infer<typeof factSchema>;
@@ -23,5 +28,4 @@ export type SearchQuery = z.infer<typeof searchQuerySchema>;
 export type NumberFacts = {
   number: number | string;
   facts: Fact[];
-  isSpecial: boolean; // True if any fact in the group is special
 };

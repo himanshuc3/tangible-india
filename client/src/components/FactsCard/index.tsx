@@ -19,7 +19,7 @@ export default function FactsCard({
   onFactChange,
 }: NumberFactsCardProps) {
   const [activeFactIndex, setActiveFactIndex] = useState(currentFactIndex);
-  const { number, facts, isSpecial } = numberFacts;
+  const { number, facts } = numberFacts;
 
   const handleFactChange = (newIndex: number) => {
     setActiveFactIndex(newIndex);
@@ -28,11 +28,7 @@ export default function FactsCard({
 
   // Single fact - no tabs/carousel needed
   if (facts.length === 1) {
-    return (
-      <div className="space-y-4">
-        <NumberDisplay fact={facts[0]} />
-      </div>
-    );
+    return <NumberDisplay fact={facts[0]} />;
   }
 
   // Multiple facts - use tabs for ≤4, carousel for >4
@@ -49,9 +45,8 @@ export default function FactsCard({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div
-                className={`text-4xl font-bold font-mono ${
-                  isSpecial ? "text-primary" : "text-foreground"
-                }`}
+                className={`text-4xl font-bold font-mono text-primary text-foreground
+                `}
               >
                 {number}
               </div>
@@ -128,9 +123,7 @@ export default function FactsCard({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
-              className={`text-4xl font-bold font-mono ${
-                isSpecial ? "text-primary" : "text-foreground"
-              }`}
+              className={`text-4xl font-bold font-mono text-primary text-foreground`}
             >
               {number}
             </div>

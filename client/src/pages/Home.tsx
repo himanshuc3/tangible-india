@@ -83,7 +83,6 @@ export default function Home() {
       const numberFacts: NumberFacts = {
         number,
         facts,
-        isSpecial: facts.some((f) => f.isSpecial),
       };
       setCurrentNumberFacts(numberFacts);
       setCurrentFactIndex(0);

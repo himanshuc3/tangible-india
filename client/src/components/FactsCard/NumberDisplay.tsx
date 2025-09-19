@@ -1,9 +1,27 @@
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Heart } from "lucide-react";
 import { useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardBody,
+  CardActions,
+  CardImage,
+  CardSubtitle,
+  Avatar,
+} from "@progress/kendo-react-layout";
 import type { Fact } from "@shared/schema";
+
+const CATEGORY_RING_COLOR = {
+  achievement: "ring-accent",
+  satirical: "ring-destructive",
+  historical: "ring-primary",
+  statistical: "ring-chart-3",
+  cultural: "ring-chart-5",
+  default: "ring-secondary",
+};
 
 interface NumberDisplayProps {
   fact: Fact;
@@ -15,7 +33,6 @@ export default function NumberDisplay({
   showFullDescription = false,
 }: NumberDisplayProps) {
   const [isExpanded, setIsExpanded] = useState(showFullDescription);
-  const [isFavorited, setIsFavorited] = useState(false);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -34,18 +51,10 @@ export default function NumberDisplay({
     }
   };
 
-  const handleToggleFavorite = () => {
-    setIsFavorited(!isFavorited);
-    console.log(
-      `${isFavorited ? "Removed from" : "Added to"} favorites:`,
-      fact.title
-    );
-  };
-
   return (
     <Card
-      className={`p-6 space-y-4 hover-elevate transition-all duration-200 ${
-        fact.isSpecial ? "ring-2 ring-primary" : ""
+      className={`shadcn-card rounded-xl border bg-card border-card-border text-card-foreground shadow-sm p-6 space-y-4 hover-elevate transition-all duration-200 ring-2 ${
+        CATEGORY_RING_COLOR[fact.category]
       }`}
     >
       <div className="flex items-center justify-between">
@@ -62,15 +71,6 @@ export default function NumberDisplay({
           >
             {fact.category}
           </Badge>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleToggleFavorite}
-            data-testid={`button-favorite-${fact.id}`}
-            className={`hover-elevate ${isFavorited ? "text-destructive" : ""}`}
-          >
-            <Heart className={`h-4 w-4 ${isFavorited ? "fill-current" : ""}`} />
-          </Button>
         </div>
       </div>
 
