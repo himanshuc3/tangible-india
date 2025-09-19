@@ -59,10 +59,11 @@ export default function NumberDisplay({
     >
       <div className="flex items-center justify-between">
         <div
-          className="text-6xl font-bold text-primary font-mono"
+          className="text-6xl font-bold text-primary font-mono flex items-base"
           data-testid={`text-number-${fact.id}`}
         >
-          {fact.number}
+          <span className="text-xl mt-1">#</span>
+          <span>{fact.number}</span>
         </div>
         <div className="flex items-center gap-2">
           <Badge

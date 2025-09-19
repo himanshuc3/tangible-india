@@ -5,7 +5,7 @@ export const mockFacts: Fact[] = [
   {
     id: "1",
     number: 0,
-    title: "The Invention of Zero",
+    title: "0️⃣ The Invention of Zero",
     description:
       "Aryabhatta, the great Indian mathematician and astronomer (476-550 CE), is credited with the invention of zero as both a placeholder and a number. This revolutionary concept transformed mathematics globally, making complex calculations possible and laying the foundation for modern computing and digital technology.",
     category: "historical",
@@ -14,7 +14,7 @@ export const mockFacts: Fact[] = [
   {
     id: "2",
     number: 1,
-    title: "Unity in Diversity",
+    title: "🫂 Unity in Diversity",
     description:
       "India is one nation but speaks over 780 languages with 22 official languages recognized by the Constitution. Despite this incredible linguistic diversity, the concept of 'Vasudhaiva Kutumbakam' (the world is one family) remains central to Indian philosophy.",
     category: "cultural",
@@ -41,7 +41,7 @@ export const mockFacts: Fact[] = [
   {
     id: "5",
     number: 28,
-    title: "States of Bureaucracy",
+    title: "💩 States of Bureaucracy",
     description:
       "India has 28 states and 8 union territories, but to get a simple business license, you might need to visit approximately 28 different government offices. The irony is not lost on anyone who's tried to start a business here!",
     category: "satirical",
