@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const factSchema = z.object({
   id: z.string(),
-  number: z.union([z.number(), z.string()]), // Supports both integers and decimals as strings
+  number: z.number(), // Supports both integers and decimals as strings
   title: z.string(),
   description: z.string(),
   category: z.enum([
@@ -26,6 +26,6 @@ export type SearchQuery = z.infer<typeof searchQuerySchema>;
 
 // New type for grouped facts by number
 export type NumberFacts = {
-  number: number | string;
+  number: number;
   facts: Fact[];
 };

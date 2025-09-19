@@ -4,7 +4,6 @@ import Header from "@/components/Header";
 import FactsCard from "@/components/FactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
-import NumberInput from "@/components/NumberInput";
 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -156,6 +155,7 @@ export default function Home() {
             onReset={handleReset}
             hasNext={currentNumberIndex < currentGroups.length - 1}
             hasPrevious={currentNumberIndex > 0}
+            facts={allNumberFacts}
           />
         </div>
 
