@@ -1,0 +1,38 @@
+@keyframes oscillate {
+  from {
+    transform: translateY(var(--billow));
+  }
+  to {
+    transform: translateY(calc(var(--billow) * -1));
+  }
+}
+
+.flag {
+  display: flex;
+  aspect-ratio: 3 / 2;
+  animation-duration: 600ms;
+
+  .column {
+    flex: 1;
+    width: 5px;
+    height: 20px;
+    background: linear-gradient(
+      to bottom,
+      rgb(255, 156, 57) 0%,
+      rgb(255, 156, 57) 33.3%,
+      hsl(0deg 0% 100%) 33.3%,
+      hsl(0deg 0% 100%) 66.7%,
+      rgb(26, 140, 16) 66.7%,
+      rgb(26, 140, 16) 100%
+    );
+    animation: oscillate 500ms alternate infinite ease-in-out both;
+  }
+  .column:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+  .column:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+}

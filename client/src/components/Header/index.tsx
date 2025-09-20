@@ -19,7 +19,7 @@ const kendokaAvatar =
 
 export default function Header() {
   return (
-    <AppBar>
+    <AppBar className="app-header max-w-4xl mt-20">
       {/* <AppBarSection>
           <Button type="button" fillMode="flat" svgIcon={menuIcon} />
         </AppBarSection> */}
@@ -45,25 +45,5 @@ export default function Header() {
         <ThemeToggle />
       </AppBarSection>
     </AppBar>
-  );
-  return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md">
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="text-3xl font-bold text-primary font-mono">0</div>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">
-                Tangible India
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                A numerical journey through India's facts
-              </p>
-            </div>
-          </div>
-          <ThemeToggle />
-        </div>
-      </div>
-    </header>
   );
 }
