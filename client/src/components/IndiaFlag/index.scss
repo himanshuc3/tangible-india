@@ -19,11 +19,11 @@
     background: linear-gradient(
       to bottom,
       rgb(255, 156, 57) 0%,
-      rgb(255, 156, 57) 33.3%,
-      hsl(0deg 0% 100%) 33.3%,
-      hsl(0deg 0% 100%) 66.7%,
-      rgb(26, 140, 16) 66.7%,
-      rgb(26, 140, 16) 100%
+      // rgb(255, 156, 57) 33.3%,
+      hsl(0deg 0% 100%) 40%,
+      // hsl(0deg 0% 100%) 66.7%,
+      rgb(26, 140, 16) 90%,
+      // rgb(26, 140, 16) 100%
     );
     animation: oscillate 500ms alternate infinite ease-in-out both;
   }
