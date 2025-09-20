@@ -5,3 +5,14 @@
     box-shadow: none !important;
     background: none !important;
 }
+
+
+.info-list>li{
+    display:flex;
+    align-items: center;  
+    gap: 10px;  
+}
+.info-list>li>span{
+    display:inline-flex;
+    width: 60px;
+}

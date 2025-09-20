@@ -12,7 +12,14 @@ import {
   PopoverActionsBar,
 } from "@progress/kendo-react-tooltip";
 import { Button } from "@progress/kendo-react-buttons";
-import { bellIcon, infoSolidIcon, codeIcon } from "@progress/kendo-svg-icons";
+import {
+  bellIcon,
+  infoSolidIcon,
+  codeIcon,
+  arrowRightIcon,
+  arrowLeftIcon,
+  caretAltUpIcon,
+} from "@progress/kendo-svg-icons";
 
 import ThemeToggle from "@/components/ThemeToggle";
 import Title from "@/components/Title";
@@ -31,9 +38,39 @@ export default function Header() {
         show={show}
         anchor={infoAnchor.current && infoAnchor.current.element}
         position={"bottom"}
-        title={"About this project"}
+        title={"Keyboard Shortcuts"}
+        className="info-popover "
       >
-        <div style={{ width: 220 }}>Keyboard shortcuts.</div>
+        <ul className="flex flex-col gap-2 info-list">
+          <li>
+            <span>
+              <Button svgIcon={caretAltUpIcon} disabled={true}>
+                + K
+              </Button>
+            </span>{" "}
+            Focus Search Bar
+          </li>
+          <li>
+            <span>
+              <Button svgIcon={caretAltUpIcon} disabled={true}>
+                + J
+              </Button>
+            </span>{" "}
+            Toggle Theme
+          </li>
+          <li>
+            <span>
+              <Button svgIcon={arrowLeftIcon} disabled={true} />
+            </span>{" "}
+            Next Fact
+          </li>
+          <li>
+            <span>
+              <Button svgIcon={arrowRightIcon} disabled={true} />
+            </span>{" "}
+            Previous Fact
+          </li>
+        </ul>
       </Popover>
       {/* <AppBarSection>
           <Button type="button" fillMode="flat" svgIcon={menuIcon} />
