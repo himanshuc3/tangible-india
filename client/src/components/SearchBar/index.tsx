@@ -17,6 +17,8 @@ import {
   bellIcon,
   caretAltToTopIcon,
   chartRadarIcon,
+  eyeIcon,
+  searchIcon,
 } from "@progress/kendo-svg-icons";
 import {
   DropdownMenu,
@@ -92,25 +94,26 @@ export default function SearchBar({
               onChange={({ value }) => setQuery(value)}
               placeholder={placeholder}
               value={query}
-              className="pl-10 pr-4"
+              className="pl-10 pr-4 rounded-md px-3 py-2 text-base h-10"
               onKeyDown={handleKeyPress}
             />
           </div>
 
           <KButton
-            svgIcon={alignBottomIcon}
-            type="button"
-            fillMode={"outline"}
-            onClick={goToRandomFact}
-          />
-
-          <Button
             onClick={handleSearch}
             data-testid="button-search"
-            className="hover-elevate"
+            svgIcon={searchIcon}
+            className="bg-primary text-primary-foreground border border-primary-border h-10"
           >
             Search
-          </Button>
+          </KButton>
+          <KButton
+            svgIcon={eyeIcon}
+            type="button"
+            fillMode={"outline"}
+            className="h-10 w-10"
+            onClick={goToRandomFact}
+          />
         </div>
 
         <div className="categories flex items-center gap-2">
