@@ -118,24 +118,6 @@ export default function FactsCard({
   // Tabs implementation for ≤4 facts
   return (
     <div className="space-y-4">
-      {/* Number Header */}
-      <Card className="p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div
-              className={`text-4xl font-bold font-mono text-primary text-foreground`}
-            >
-              {number}
-            </div>
-            <Badge
-              variant="secondary"
-              data-testid={`badge-fact-count-${number}`}
-            >
-              {facts.length} facts
-            </Badge>
-          </div>
-        </div>
-      </Card>
 
       {/* Tabs for Facts */}
       <Tabs

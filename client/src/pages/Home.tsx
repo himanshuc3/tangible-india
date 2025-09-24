@@ -5,7 +5,10 @@ import FactsCard from "@/components/FactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
 
-import { Card } from "@/components/ui/card";
+import {
+	Card,
+} from '@progress/kendo-react-layout';
+// import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
 import {
@@ -42,7 +45,6 @@ export default function Home() {
       setCurrentFactIndex(0);
     }
 
-    console.log(`Search results: ${results.length} number groups found`);
   };
 
   // Handle navigation between number groups
@@ -105,7 +107,7 @@ export default function Home() {
   // Handle random fact
   const goToRandomFact = () => {
     const randomResult = getRandomNumberFacts();
-    const groups = isSearchMode ? searchResults : allNumberFacts;
+    const groups = allNumberFacts
 
     setCurrentNumberIndex(randomResult.groupIndex);
     setCurrentFactIndex(randomResult.factIndex);
@@ -158,6 +160,23 @@ export default function Home() {
             facts={allNumberFacts}
           />
         </div>
+
+        {isSearchMode && (
+        <Card className="p-4">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="text-sm font-medium">
+              Found {searchResults.length} number
+              {searchResults.length !== 1 ? "s" : ""} with facts
+            </span>
+            {searchResults.length > 0 && (
+              <Badge variant="secondary" className="ml-auto">
+                Number {currentNumberIndex + 1} of {searchResults.length}
+              </Badge>
+            )}
+          </div>
+        </Card>
+      )}
 
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (

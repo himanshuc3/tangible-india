@@ -1,8 +1,4 @@
-import { Filter } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles } from "lucide-react";
+import { useEffect } from "react";
 import { Input } from "@progress/kendo-react-inputs";
 import {
   Button as KButton,
@@ -20,13 +16,9 @@ import {
   eyeIcon,
   searchIcon,
 } from "@progress/kendo-svg-icons";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+
+import './index.scss'
 
 interface SearchBarProps {
   onSearch: (query: string, category?: string) => void;
@@ -54,11 +46,11 @@ export default function SearchBar({
   goToRandomFact,
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState<string[]>(categories.map(c => c.value));
 
   const handleSearch = () => {
     console.log("Search triggered:", { query, category: selectedCategory });
-    onSearch(query, selectedCategory === "all" ? undefined : selectedCategory);
+    onSearch(query, selectedCategory ? undefined : selectedCategory);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -66,6 +58,12 @@ export default function SearchBar({
       handleSearch();
     }
   };
+
+  const handleCategoryChange = (e: any) => {
+    const selectedValues = e.value
+    setSelectedCategory(selectedValues);
+    onSearch(query, selectedValues);
+  }
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -84,6 +82,13 @@ export default function SearchBar({
     }
   };
 
+  useEffect(() => {
+    if(!isSearchMode) {
+      setQuery("");
+      setSelectedCategory(categories.map(c => c.value));
+    }
+  }, [isSearchMode]);
+
   return (
     <div className="space-y-6">
       <div className="w-full max-w-2xl mx-auto space-y-3">
@@ -91,7 +96,7 @@ export default function SearchBar({
           <div className="relative flex-1">
             <Input
               type="text"
-              onChange={({ value }) => setQuery(value)}
+              onChange={({ target:{value} }) => setQuery(value as string)}
               placeholder={placeholder}
               value={query}
               className="pl-10 pr-4 rounded-md px-3 py-2 text-base h-10"
@@ -117,53 +122,27 @@ export default function SearchBar({
         </div>
 
         <div className="categories flex items-center gap-2">
-          <Chip>
+          <Chip disabled={true} className="bg-secondary text-secondary-foreground">
             <span className="k-chip-label">Selected: 0</span>
           </Chip>
           <ChipList
             defaultData={categories}
-            defaultValue={[]}
+            defaultValue={selectedCategory}
             selection="multiple"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="category-list"
             chip={(props: ChipProps) => (
               <Chip
                 {...props}
+                className={`${props.selected? "selected": ""} ${getCategoryColor(props.dataItem.value)}`}
                 svgIcon={props.dataItem.icon}
                 // fillMode={props.dataItem.fillMode}
               />
             )}
           />
-
-          {/* <Badge
-            className={getCategoryColor(selectedCategory)}
-            data-testid={`badge-active-filter`}
-          >
-            {categories.find((c) => c.value === selectedCategory)?.label}
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className="ml-2 hover:opacity-70"
-              data-testid="button-clear-filter"
-            >
-              ×
-            </button>
-          </Badge> */}
         </div>
       </div>
-      {isSearchMode && (
-        <Card className="p-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">
-              Found {searchResults.length} number
-              {searchResults.length !== 1 ? "s" : ""} with facts
-            </span>
-            {searchResults.length > 0 && (
-              <Badge variant="secondary" className="ml-auto">
-                Number {currentNumberIndex + 1} of {searchResults.length}
-              </Badge>
-            )}
-          </div>
-        </Card>
-      )}
     </div>
   );
 }

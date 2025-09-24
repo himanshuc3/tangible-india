@@ -141,12 +141,12 @@ export const mockFacts: Fact[] = [
   },
 ];
 
-export function searchFacts(query: string, category?: string): Fact[] {
+export function searchFacts(query: string, category?: string[]): Fact[] {
   let results = mockFacts;
 
   // Filter by category if specified
-  if (category && category !== "all") {
-    results = results.filter((fact) => fact.category === category);
+  if (category) {
+    results = results.filter((fact) => category.includes(fact.category));
   }
 
   // If query is empty, return filtered results
@@ -155,6 +155,8 @@ export function searchFacts(query: string, category?: string): Fact[] {
   }
 
   // Search by number or text content
+  // NOTE: 
+  // 1. Provide better search functionality - fuzzy search, typo tolerance (closest distance to change threshold) etc.
   const searchTerm = query.toLowerCase();
   return results.filter(
     (fact) =>
