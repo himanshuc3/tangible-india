@@ -22,5 +22,6 @@
 
 - Styling:
   - Side progression bar
+- Replace: Remaining components from custom to KendoReact
 
 # v0.2

@@ -3,7 +3,6 @@ import {
   AppBar,
   AppBarSection,
   AppBarSpacer,
-  Avatar,
 } from "@progress/kendo-react-layout";
 import { Badge, BadgeContainer } from "@progress/kendo-react-indicators";
 import {

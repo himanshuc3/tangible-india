@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 
 import Header from "@/components/Header";
 import FactsCard from "@/components/FactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
-
+import { Navigation } from '@progress/kendo-react-common';
 import {
 	Card,
 } from '@progress/kendo-react-layout';
-// import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import About from "@/components/About";
+import Statistics from "@/components/Statistics";
 import { Sparkles } from "lucide-react";
 import {
   mockFacts,
@@ -32,6 +33,48 @@ export default function Home() {
   const [searchResults, setSearchResults] =
     useState<NumberFacts[]>(allNumberFacts);
   const [isSearchMode, setIsSearchMode] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const navigation = useMemo(
+        () =>
+            new Navigation({
+                root,
+                selectors: ['home-wrapper'],
+                keyboardEvents: {
+                    keydown: {
+                        ArrowRight: (target, nav, ev) => {
+                          console.log("right arrow pressed");
+                            ev.preventDefault();
+                            handleNext()
+                        },
+                        ArrowLeft: (target, nav, ev) => {
+                            ev.preventDefault();
+                            handlePrevious()
+                        }
+                    }
+                },
+                tabIndex: 0
+            }),
+        []
+    );
+
+    const onKeyDown = useCallback(navigation.triggerKeyboardEvent.bind(navigation), []);
+
+    useEffect(() => {
+
+      function onKeyDownEvent(event: KeyboardEvent) {
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          handleNext();
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          handlePrevious();
+        }
+      }
+
+        const body = document.querySelector('body');
+        body?.addEventListener('keydown', onKeyDownEvent);
+        return () => body?.removeEventListener('keydown', onKeyDownEvent);
+    } , []);
 
   // Handle search
   const handleSearch = (query: string, category?: string) => {
@@ -133,7 +176,7 @@ export default function Home() {
   const maxNumber = 1400000000; // India's population
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background home-wrapper" ref={root} onKeyDown={onKeyDown}>
       {/* Header */}
       <Header />
 
@@ -204,30 +247,12 @@ export default function Home() {
         )}
 
         {/* Footer Info */}
-        <Card className="p-6">
-          <div className="text-center space-y-3">
-            <h3 className="font-semibold text-lg">About Tangible India</h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Explore India through numbers, from Aryabhatta's revolutionary
-              zero to the billion-plus population. Each number tells a story -
-              historical, cultural, satirical, or statistical. Discover the
-              tangible facts that make India unique!
-            </p>
-            <div className="flex justify-center gap-2 flex-wrap">
-              {[
-                "historical",
-                "cultural",
-                "achievement",
-                "statistical",
-                "satirical",
-              ].map((category) => (
-                <Badge key={category} variant="secondary" className="text-xs">
-                  {category}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        </Card>
+        <div className="flex gap-6">
+
+        <Statistics />
+        <About />
+        </div>
+        
       </main>
     </div>
   );

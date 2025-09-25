@@ -1,6 +1,5 @@
 import { chevronRightIcon, chevronLeftIcon } from "@progress/kendo-svg-icons";
 import { Button } from "@progress/kendo-react-buttons";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import type { NumberFacts } from "@shared/schema";
 
 import { Slider, SliderLabel } from "@progress/kendo-react-inputs";
@@ -29,7 +28,7 @@ function displayNumber(number: number): string {
   } else if (number / THOUSAND >= 1) {
     return number / THOUSAND + "K";
   } else {
-    return number;
+    return number + "";
   }
 }
 
