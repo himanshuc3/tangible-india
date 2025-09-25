@@ -4,7 +4,7 @@ import {
 } from '@progress/kendo-react-layout';
 
 export default function About() {
-  return (<Card className="p-6">
+  return (<Card className="p-6 flex-1 basis-2/3">
     <div className="text-center space-y-3">
       <h3 className="font-semibold text-lg">About Tangible India</h3>
       <p className="text-muted-foreground max-w-2xl mx-auto">

@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Heart } from "lucide-react";
+import { Button } from '@progress/kendo-react-buttons';
 import { useState } from "react";
 import {
   Card,
@@ -77,47 +76,48 @@ export default function NumberDisplay({
 
       <div className="border-t pt-4 space-y-2">
         <h3
-          className="text-xl font-semibold mb-2"
+          className="text-3xl font-semibold mb-2"
           data-testid={`text-title-${fact.id}`}
         >
           {fact.title}
         </h3>
 
         <div
-          className={`text-muted-foreground ${
+          className={`text-lg mx-6 p-2 border rounded-md background ${
             !isExpanded && fact.description.length > 200 ? "line-clamp-3" : ""
           }`}
         >
-          <p data-testid={`text-description-${fact.id}`}>{fact.description}</p>
+          <p data-testid={`text-description-${fact.id}`} dangerouslySetInnerHTML={{__html: fact.description}} />
         </div>
 
         {fact.description.length > 200 && !showFullDescription && (
+          <div className="flex grow w-full justify-end">
           <Button
-            variant="ghost"
-            size="sm"
+          
             onClick={() => setIsExpanded(!isExpanded)}
             data-testid={`button-expand-${fact.id}`}
-            className="mt-2 p-0 h-auto text-primary hover-elevate"
+            className="mt-2 background-transparent border-none p-0 h-auto text-primary hover-elevate  mr-6"
           >
             {isExpanded ? "Show less" : "Read more"}
           </Button>
+          </div>
         )}
       </div>
 
-      {fact.source && (
+      {fact.source ? (
+        
         <div className="flex items-center gap-2 pt-2 border-t">
-          <span className="text-sm text-muted-foreground">Source:</span>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="p-0 h-auto text-sm text-primary hover-elevate"
+          {fact.source.map(({name, url}, index) => (
+          <a
+            href={url}
+            className="p-0 h-auto text-sm text-primary hover-elevate "
             data-testid={`button-source-${fact.id}`}
           >
-            <ExternalLink className="h-3 w-3 mr-1" />
-            {fact.source}
-          </Button>
+            {name}
+          </a>
+          ))}
         </div>
-      )}
+      ): null}
     </Card>
   );
 }

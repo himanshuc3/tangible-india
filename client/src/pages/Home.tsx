@@ -249,7 +249,7 @@ export default function Home() {
         {/* Footer Info */}
         <div className="flex gap-6">
 
-        <Statistics />
+        {/* <Statistics /> */}
         <About />
         </div>
         

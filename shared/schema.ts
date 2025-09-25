@@ -12,7 +12,12 @@ export const factSchema = z.object({
     "statistical",
     "cultural",
   ]),
-  source: z.string().optional(),
+  source: z.array(
+            z.object({
+              name: z.string(),
+              url: z.string().url(),
+            })
+          ).optional()
 });
 
 export type Fact = z.infer<typeof factSchema>;
