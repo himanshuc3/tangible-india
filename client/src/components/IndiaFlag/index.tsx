@@ -1,3 +1,5 @@
+import { Fade } from '@progress/kendo-react-animation';
+
 import "./index.scss";
 
 export default function IndiaFlag({

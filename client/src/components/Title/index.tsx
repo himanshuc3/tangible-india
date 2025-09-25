@@ -1,5 +1,7 @@
 import { animate, createScope, createSpring, createDraggable } from "animejs";
 import { useEffect, useRef, useState } from "react";
+
+
 import IndiaFlag from "@/components/IndiaFlag";
 import "./index.scss";
 
@@ -9,6 +11,9 @@ const HEADING = "TANGIBLE";
 export default function Title() {
   const root = useRef(null);
   const scope = useRef(null);
+  const [isFlagVisible, setFlagVisible] = useState(false);
+  const [flagFadeIn, setFlagFadeIn] = useState(false);
+  const flagTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     scope.current = createScope({ root }).add((self) => {
@@ -28,7 +33,12 @@ export default function Title() {
             setTimeout(scramble, Math.ceil(scrambleInterval * Math.random()));
           } else {
             el.textContent =
-              Math.random() < 1 ? original : original.toLowerCase();
+              Math.random() < 0.5 ? original : original.toLowerCase();
+              if(idx === chars.length - 3){
+                // Delay the flag appearance by 2 seconds, then fade in
+                  setFlagVisible(true);
+                  setTimeout(() => setFlagFadeIn(true), 50); // trigger fade after mount
+              }
             // Optional: bounce effect after reveal
             // animate(el, {
             //   scale: [
@@ -43,7 +53,10 @@ export default function Title() {
     });
 
     // Properly cleanup all anime.js instances declared inside the scope
-    return () => scope.current.revert();
+    return () => {
+      scope.current?.revert();
+      if (flagTimeout.current) clearTimeout(flagTimeout.current);
+    };
   }, []);
 
   return (
@@ -56,7 +69,15 @@ export default function Title() {
           ></p>
         ))}
       </h1>
-      <IndiaFlag numOfColumns={8} staggeredDelay={20} billow={0.4} />
+      
+        {isFlagVisible && (
+          <div
+            className={`transition-opacity duration-500 ${flagFadeIn ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transitionDelay: '0s' }}
+          >
+            <IndiaFlag numOfColumns={8} staggeredDelay={20} billow={0.4} />
+          </div>
+        )}
     </div>
   );
 }

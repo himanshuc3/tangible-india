@@ -71,9 +71,6 @@ export default function Header() {
           </li>
         </ul>
       </Popover>
-      {/* <AppBarSection>
-          <Button type="button" fillMode="flat" svgIcon={menuIcon} />
-        </AppBarSection> */}
 
       <AppBarSpacer style={{ width: 4 }} />
 

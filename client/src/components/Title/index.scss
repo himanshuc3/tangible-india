@@ -1,4 +1,7 @@
 .title-container {
+    height: 40px;
+    display: flex;
+    align-items: center;
     .title p {
         display:inline-flex;
         margin: 0;
@@ -6,7 +9,9 @@
         height: 20px;
         justify-content: center;
         align-items: center;
-        
+        min-width: 20px;
+        max-width: 20px;
+        text-align: center;
     }
 
 }
