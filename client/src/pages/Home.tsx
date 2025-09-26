@@ -142,7 +142,7 @@ export default function Home() {
       <Header />
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8 space-y-8 max-w-4xl">
+      <main className="container mx-auto px-4 py-8 space-y-4 max-w-4xl">
         {/* Search Section */}
         <SearchBar
           onSearch={handleSearch}
@@ -151,7 +151,6 @@ export default function Home() {
           currentNumberIndex={currentNumberIndex}
           goToRandomFact={goToRandomFact}
         />
-        <div>
           <ProgressIndicator
             currentNumber={currentNumberFacts.number}
             totalNumbers={currentGroups.length}
@@ -163,24 +162,6 @@ export default function Home() {
             hasPrevious={currentNumberIndex > 0}
             facts={allNumberFacts}
           />
-        </div>
-
-        {isSearchMode && (
-          <Card className="p-4">
-            <div className="flex items-center gap-2">
-              <SvgIcon icon={sparklesIcon} className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium">
-                Found {searchResults.length} number
-                {searchResults.length !== 1 ? "s" : ""} with facts
-              </span>
-              {searchResults.length > 0 && (
-                <span className="ml-auto">
-                  Number {currentNumberIndex + 1} of {searchResults.length}
-                </span>
-              )}
-            </div>
-          </Card>
-        )}
 
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (

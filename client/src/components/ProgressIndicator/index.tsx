@@ -47,6 +47,20 @@ export default function ProgressIndicator({
 
   return (
     <div className="w-3/4 flex flex-col m-auto">
+      <Slider
+        step={1}
+        value={currentIndex + 1}
+        min={1}
+        max={totalNumbers}
+        className="elative h-20 w-full overflow-hidden rounded-full "
+        data-testid="progress-indicator "
+      >
+        {facts.map(({ number }, i) => (
+          <SliderLabel key={i} position={i + 1}>
+            {displayNumber(number)}
+          </SliderLabel>
+        ))}
+      </Slider>
       <div className="flex items-center justify-center gap-4">
         <Button
           svgIcon={chevronLeftIcon}
@@ -67,21 +81,6 @@ export default function ProgressIndicator({
           onClick={onNext}
         ></Button>
       </div>
-
-      <Slider
-        step={1}
-        value={currentIndex + 1}
-        min={1}
-        max={totalNumbers}
-        className="elative h-20 w-full overflow-hidden rounded-full "
-        data-testid="progress-indicator "
-      >
-        {facts.map(({ number }, i) => (
-          <SliderLabel key={i} position={i + 1}>
-            {displayNumber(number)}
-          </SliderLabel>
-        ))}
-      </Slider>
     </div>
   );
 }

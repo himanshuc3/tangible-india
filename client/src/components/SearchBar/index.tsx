@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Input } from "@progress/kendo-react-inputs";
 import { Button } from "@progress/kendo-react-buttons";
-import { Tooltip } from '@progress/kendo-react-tooltip'
+import { Tooltip } from "@progress/kendo-react-tooltip";
 import {
   Button as KButton,
   ChipList,
@@ -70,17 +70,35 @@ export default function SearchBar({
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "achievement":
-        return "bg-accent text-accent-foreground";
+        return {
+          backgroundColor: "hsl(var(--chart-2))",
+          color: "hsl(var(--primary-foreground))",
+        };
       case "satirical":
-        return "bg-destructive text-destructive-foreground";
+        return {
+          backgroundColor: "hsl(var(--destructive))",
+          color: "hsl(var(--primary-foreground))",
+        };
       case "historical":
-        return "bg-primary text-primary-foreground";
+        return {
+          backgroundColor: "hsl(var(--primary))",
+          color: "hsl(var(--primary-foreground))",
+        };
       case "statistical":
-        return "bg-chart-3 text-primary-foreground";
+        return {
+          backgroundColor: "hsl(var(--chart-3))",
+          color: "hsl(var(--primary-foreground))",
+        };
       case "cultural":
-        return "bg-chart-5 text-primary-foreground";
+        return {
+          backgroundColor: "hsl(var(--chart-5))",
+          color: "hsl(var(--primary-foreground))",
+        };
       default:
-        return "bg-secondary text-secondary-foreground";
+        return {
+           backgroundColor: "hsl(var(--secondary))",
+          color: "hsl(var(--primary-foreground))",
+        }
     }
   };
 
@@ -133,23 +151,17 @@ export default function SearchBar({
             Search
           </KButton>
           <Tooltip title="Get a random fact mapped to the numbers of India!">
-          <KButton
-            svgIcon={sparklesIcon}
-            type="button"
-            fillMode={"flat"}
-            className="h-10 w-10 bg-card"
-            onClick={goToRandomFact}
-          />
+            <KButton
+              svgIcon={sparklesIcon}
+              type="button"
+              fillMode={"flat"}
+              className="h-10 w-10 bg-card"
+              onClick={goToRandomFact}
+            />
           </Tooltip>
         </div>
 
         <div className="categories flex items-center gap-2">
-          <Chip
-            disabled={true}
-            className="bg-secondary text-secondary-foreground"
-          >
-            <span className="k-chip-label">Selected: 0</span>
-          </Chip>
           <ChipList
             defaultData={categories}
             defaultValue={selectedCategory}
@@ -160,11 +172,13 @@ export default function SearchBar({
             chip={(props: ChipProps) => (
               <Chip
                 {...props}
-                className={`${
-                  props.selected ? "selected" : ""
-                } ${getCategoryColor(props.dataItem.value)}`}
+                style={getCategoryColor(props.dataItem.value)}
+                className={` border border-2 ${
+                  selectedCategory.includes(props.dataItem.value)
+                    ? "border-primary"
+                    : "border-transparent"
+                }`}
                 svgIcon={props.dataItem.icon}
-                // fillMode={props.dataItem.fillMode}
               />
             )}
           />
