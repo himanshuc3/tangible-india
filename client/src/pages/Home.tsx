@@ -4,14 +4,10 @@ import Header from "@/components/Header";
 import FactsCard from "@/components/FactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
-import { Navigation } from "@progress/kendo-react-common";
 import { Card } from "@progress/kendo-react-layout";
-import { Badge } from "@/components/ui/badge";
 import About from "@/components/About";
 import Statistics from "@/components/Statistics";
-import {
-  sparklesIcon
-} from "@progress/kendo-svg-icons";
+import { sparklesIcon } from "@progress/kendo-svg-icons";
 import { SvgIcon } from "@progress/kendo-react-common";
 import {
   mockFacts,
@@ -26,7 +22,6 @@ import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 export default function Home() {
   // Initialize with grouped data
   const allNumberFacts = groupFactsByNumber(mockFacts);
-  
 
   const [currentNumberFacts, setCurrentNumberFacts] = useState<NumberFacts>(
     allNumberFacts[0]
@@ -49,7 +44,6 @@ export default function Home() {
     }
   };
 
-
   const handlePrevious = () => {
     const groups = isSearchMode ? searchResults : allNumberFacts;
     if (currentNumberIndex > 0) {
@@ -59,35 +53,11 @@ export default function Home() {
       setCurrentFactIndex(0); // Reset to first fact of previous number
     }
   };
-  
+
   useKeyboardShortcuts({
     onPrevFact: handlePrevious,
     onNextFact: handleNext,
-    onToggleTheme: () => {
-      const html = document.querySelector("html");
-      if (html) {
-        if (html.classList.contains("dark")) {
-          html.classList.remove("dark");
-          localStorage.setItem("theme", "light");
-        } else {
-          html.classList.add("dark");
-          localStorage.setItem("theme", "dark");
-        }
-      }
-    },
-    onFocusSearchBar: () => {
-      const searchInput = document.getElementById(
-        "search-input"
-      ) as HTMLInputElement | null;
-      if (searchInput) {
-        searchInput.focus();
-      }
-    },
   });
-
- 
-
- 
 
   // Handle search
   const handleSearch = (query: string, category?: string) => {
@@ -102,7 +72,6 @@ export default function Home() {
     }
   };
 
-  
   const handleReset = () => {
     setCurrentNumberIndex(0);
     setCurrentFactIndex(0);
@@ -168,10 +137,7 @@ export default function Home() {
   const maxNumber = 1400000000; // India's population
 
   return (
-    <div
-      className="min-h-screen bg-background home-wrapper"
-      ref={root}
-    >
+    <div className="min-h-screen bg-background home-wrapper" ref={root}>
       {/* Header */}
       <Header />
 
@@ -208,9 +174,9 @@ export default function Home() {
                 {searchResults.length !== 1 ? "s" : ""} with facts
               </span>
               {searchResults.length > 0 && (
-                <Badge variant="secondary" className="ml-auto">
+                <span className="ml-auto">
                   Number {currentNumberIndex + 1} of {searchResults.length}
-                </Badge>
+                </span>
               )}
             </div>
           </Card>

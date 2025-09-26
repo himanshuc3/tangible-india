@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { Input } from "@progress/kendo-react-inputs";
+import { Button } from "@progress/kendo-react-buttons";
+import { Tooltip } from '@progress/kendo-react-tooltip'
 import {
   Button as KButton,
   ChipList,
@@ -7,22 +9,21 @@ import {
   Chip,
 } from "@progress/kendo-react-buttons";
 import {
-  alignBottomIcon,
   binocularsIcon,
   bicycleIcon,
   bellIcon,
   caretAltToTopIcon,
   chartRadarIcon,
-  eyeIcon,
   searchIcon,
+  sparklesIcon,
 } from "@progress/kendo-svg-icons";
 import { useState } from "react";
 
-import './index.scss'
+import "./index.scss";
 
 interface SearchBarProps {
   onSearch: (query: string, category?: string) => void;
-  placeholder?: string;
+
   isSearchMode: boolean;
   searchResults: any[];
   currentNumberIndex: number;
@@ -40,13 +41,14 @@ const categories = [
 export default function SearchBar({
   onSearch,
   isSearchMode,
-  placeholder = "Search by number or keyword...",
   searchResults,
   currentNumberIndex,
   goToRandomFact,
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string[]>(categories.map(c => c.value));
+  const [selectedCategory, setSelectedCategory] = useState<string[]>(
+    categories.map((c) => c.value)
+  );
 
   const handleSearch = () => {
     console.log("Search triggered:", { query, category: selectedCategory });
@@ -60,10 +62,10 @@ export default function SearchBar({
   };
 
   const handleCategoryChange = (e: any) => {
-    const selectedValues = e.value
+    const selectedValues = e.value;
     setSelectedCategory(selectedValues);
     onSearch(query, selectedValues);
-  }
+  };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -83,9 +85,9 @@ export default function SearchBar({
   };
 
   useEffect(() => {
-    if(!isSearchMode) {
+    if (!isSearchMode) {
       setQuery("");
-      setSelectedCategory(categories.map(c => c.value));
+      setSelectedCategory(categories.map((c) => c.value));
     }
   }, [isSearchMode]);
 
@@ -96,33 +98,56 @@ export default function SearchBar({
           <div className="relative flex-1">
             <Input
               type="text"
-              onChange={({ target:{value} }) => setQuery(value as string)}
-              placeholder={placeholder}
+              onChange={({ target: { value } }) => setQuery(value as string)}
+              placeholder="Search by number or text"
               value={query}
-              className="pl-10 pr-4 rounded-md px-3 py-2 text-base h-10"
+              id="search-input"
+              className="pl-10 pr-4 rounded-md px-3 py-2 h-10 bg-card text-secondary-foreground"
               onKeyDown={handleKeyPress}
             />
+            <span
+              style={{
+                position: "absolute",
+                right: "5px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                pointerEvents: "none", // Prevent pointer events on the icon
+              }}
+            >
+              <Button
+                svgIcon={caretAltToTopIcon}
+                disabled={true}
+                className="text-secondary-foreground bg-secondary opacity-100"
+              >
+                + K
+              </Button>
+            </span>{" "}
           </div>
 
           <KButton
             onClick={handleSearch}
             data-testid="button-search"
             svgIcon={searchIcon}
-            className="bg-primary text-primary-foreground border border-primary-border h-10"
+            className="bg-primary text-primary-foreground h-10 font-medium"
           >
             Search
           </KButton>
+          <Tooltip title="Get a random fact mapped to the numbers of India!">
           <KButton
-            svgIcon={eyeIcon}
+            svgIcon={sparklesIcon}
             type="button"
-            fillMode={"outline"}
-            className="h-10 w-10"
+            fillMode={"flat"}
+            className="h-10 w-10 bg-card"
             onClick={goToRandomFact}
           />
+          </Tooltip>
         </div>
 
         <div className="categories flex items-center gap-2">
-          <Chip disabled={true} className="bg-secondary text-secondary-foreground">
+          <Chip
+            disabled={true}
+            className="bg-secondary text-secondary-foreground"
+          >
             <span className="k-chip-label">Selected: 0</span>
           </Chip>
           <ChipList
@@ -135,7 +160,9 @@ export default function SearchBar({
             chip={(props: ChipProps) => (
               <Chip
                 {...props}
-                className={`${props.selected? "selected": ""} ${getCategoryColor(props.dataItem.value)}`}
+                className={`${
+                  props.selected ? "selected" : ""
+                } ${getCategoryColor(props.dataItem.value)}`}
                 svgIcon={props.dataItem.icon}
                 // fillMode={props.dataItem.fillMode}
               />

@@ -1,25 +1,19 @@
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { Button } from "@progress/kendo-react-buttons";
+import { plusOutlineIcon, minusOutlineIcon } from "@progress/kendo-svg-icons";
+import { SvgIcon } from "@progress/kendo-react-common";
+
 import { useTheme } from "@/hooks/themeContext";
 
 export default function ThemeToggle() {
-  const {theme, toggleTheme} = useTheme()
-
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <Button
-      variant="ghost"
-      size="icon"
+      type="button"
+      fillMode="flat"
+      className="text-card-foreground"
       onClick={toggleTheme}
-      data-testid="button-theme-toggle"
-      className="hover-elevate text-card-foreground"
-    >
-      {theme === "light" ? (
-        <Moon className="h-4 w-4" />
-      ) : (
-        <Sun className="h-4 w-4" />
-      )}
-    </Button>
+      svgIcon={theme === "light" ? minusOutlineIcon : plusOutlineIcon}
+    ></Button>
   );
 }

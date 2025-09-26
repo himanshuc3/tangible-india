@@ -4,16 +4,13 @@ import {
   AppBarSection,
   AppBarSpacer,
 } from "@progress/kendo-react-layout";
-import {
-  Tooltip,
-  Popover,
-} from "@progress/kendo-react-tooltip";
+import { Popover } from "@progress/kendo-react-tooltip";
 import { Button } from "@progress/kendo-react-buttons";
 import {
-  infoSolidIcon,
   arrowRightIcon,
   arrowLeftIcon,
-  caretAltToTopIcon
+  caretAltToTopIcon,
+  questionSolidIcon
 } from "@progress/kendo-svg-icons";
 
 import ThemeToggle from "@/components/ThemeToggle";
@@ -77,33 +74,33 @@ export default function Header() {
       <AppBarSpacer style={{ width: 32 }} />
 
       <AppBarSpacer />
-{/* TODO: Struggling with Animation with KendoReact, even with MCP */}
+      {/* TODO: Struggling with Animation with KendoReact, even with MCP */}
 
       <AppBarSection>
         <Button
           type="button"
           fillMode="flat"
           className="text-card-foreground"
-          svgIcon={infoSolidIcon}
+          svgIcon={questionSolidIcon}
           ref={infoAnchor}
           onClick={() => setShow(!show)}
         ></Button>
         {/* TODO: Replace with svg theme toggle icon from KR */}
         <ThemeToggle />
-        <Tooltip anchorElement="target" position="top">
-          <Button
-            type="button"
-            fillMode="flat"
-            onClick={() =>
-              window.open(
-                "https://github.com/himanshuc3/tangible-india/",
-                "_blank"
-              )
-            }
-            title="Contribute your ideas, facts or questions on GitHub"
-            className="text-card-foreground font-medium"
-          >Want to contribute?</Button>
-        </Tooltip>
+        <Button
+          type="button"
+          fillMode="flat"
+          onClick={() =>
+            window.open(
+              "https://github.com/himanshuc3/tangible-india/",
+              "_blank"
+            )
+          }
+          title="Contribute your ideas, facts or questions on GitHub"
+          className="text-card-foreground font-medium"
+        >
+          Want to contribute?
+        </Button>
       </AppBarSection>
     </AppBar>
   );

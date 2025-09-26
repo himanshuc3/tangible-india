@@ -1,17 +1,24 @@
 import { useEffect, useRef } from "react";
+import { useTheme } from "@/hooks/themeContext";
 
 export function useKeyboardShortcuts({
   onPrevFact,
   onNextFact,
-  onToggleTheme,
-  onFocusSearchBar,
 }: {
   onPrevFact: () => void;
   onNextFact: () => void;
-  onToggleTheme: () => void;
-  onFocusSearchBar: () => void;
 }) {
   const searchBarRef = useRef<HTMLInputElement | null>(null);
+  const {toggleTheme} = useTheme()
+
+  function onFocusSearchBar() {
+    const searchInput = document.getElementById(
+      "search-input"
+    ) as HTMLInputElement;
+    if (searchInput) {
+      searchInput.focus();
+    }
+  }
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -21,7 +28,7 @@ export function useKeyboardShortcuts({
         onNextFact();
       } else if (event.ctrlKey && (event.key === "j" || event.key === "J")) {
         event.preventDefault();
-        onToggleTheme();
+        toggleTheme();
       } else if (event.ctrlKey && (event.key === "k" || event.key === "K")) {
         event.preventDefault();
         onFocusSearchBar();
@@ -29,7 +36,7 @@ export function useKeyboardShortcuts({
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onPrevFact, onNextFact, onToggleTheme, onFocusSearchBar]);
+  }, [onPrevFact, onNextFact, onFocusSearchBar]);
 
   return { searchBarRef };
 }

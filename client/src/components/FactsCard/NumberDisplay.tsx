@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from '@progress/kendo-react-buttons';
 import { useState } from "react";
 import {
@@ -58,12 +57,12 @@ export default function NumberDisplay({
           <span>{fact.number}</span>
         </div>
         <div className="flex items-center gap-2">
-          <Badge
+          <span
             className={getCategoryColor(fact.category)}
             data-testid={`badge-category-${fact.id}`}
           >
             {fact.category}
-          </Badge>
+          </span>
         </div>
       </div>
 

@@ -1,16 +1,17 @@
-import {
-  Card,
-} from "@progress/kendo-react-layout";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@progress/kendo-react-layout";
 import { Button } from "@progress/kendo-react-buttons";
 import {
-  chevronLeftIcon,
-  chevronRightIcon
-} from "@progress/kendo-svg-icons";
+  TabStrip,
+  TabStripTab,
+  TabStripSelectEventArguments
+} from "@progress/kendo-react-layout";
+import { chevronLeftIcon, chevronRightIcon } from "@progress/kendo-svg-icons";
 import { useState } from "react";
 import NumberDisplay from "./NumberDisplay";
 import type { NumberFacts } from "@shared/schema";
+
+import './index.scss'
+
 
 interface NumberFactsCardProps {
   numberFacts: NumberFacts;
@@ -26,9 +27,10 @@ export default function FactsCard({
   const [activeFactIndex, setActiveFactIndex] = useState(currentFactIndex);
   const { number, facts } = numberFacts;
 
-  const handleFactChange = (newIndex: number) => {
-    setActiveFactIndex(newIndex);
-    onFactChange?.(newIndex);
+
+  const handleFactChange = ({selected}: TabStripSelectEventArguments) => {
+    setActiveFactIndex(selected);
+    onFactChange?.(selected);
   };
 
   // Single fact - no tabs/carousel needed
@@ -56,12 +58,9 @@ export default function FactsCard({
                 {number}
               </div>
               <div>
-                <Badge
-                  variant="secondary"
-                  data-testid={`badge-fact-count-${number}`}
-                >
+                <span data-testid={`badge-fact-count-${number}`}>
                   {facts.length} facts
-                </Badge>
+                </span>
                 <div className="text-sm text-muted-foreground mt-1">
                   Fact {activeFactIndex + 1} of {facts.length}
                 </div>
@@ -77,11 +76,10 @@ export default function FactsCard({
                 disabled={activeFactIndex === 0}
                 data-testid={`button-prev-fact-${number}`}
                 className="hover-elevate"
-              >
-              </Button>
+              ></Button>
 
               <Button
-              svgIcon={chevronRightIcon}
+                svgIcon={chevronRightIcon}
                 onClick={() =>
                   handleFactChange(
                     Math.min(facts.length - 1, activeFactIndex + 1)
@@ -90,8 +88,7 @@ export default function FactsCard({
                 disabled={activeFactIndex === facts.length - 1}
                 data-testid={`button-next-fact-${number}`}
                 className="hover-elevate"
-              >
-              </Button>
+              ></Button>
             </div>
           </div>
 
@@ -119,32 +116,20 @@ export default function FactsCard({
   // Tabs implementation for ≤4 facts
   return (
     <div className="space-y-4">
-
       {/* Tabs for Facts */}
-      <Tabs
-        value={activeFactIndex.toString()}
-        onValueChange={(value) => handleFactChange(parseInt(value))}
-        data-testid={`tabs-facts-${number}`}
-      >
-        <TabsList className="grid grid-cols-2 md:grid-cols-4 w-full">
-          {facts.map((fact, index) => (
-            <TabsTrigger
-              key={fact.id}
-              value={index.toString()}
-              data-testid={`tab-trigger-${number}-${index}`}
-              className="text-xs"
-            >
-              Fact {index + 1}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
+      <TabStrip selected={activeFactIndex} onSelect={handleFactChange} className="fact-card-tablist">
         {facts.map((fact, index) => (
-          <TabsContent key={fact.id} value={index.toString()}>
+          <TabStripTab
+            key={fact.id}
+            title={`Fact ${index + 1}`}
+            data-testid={`tab-trigger-${number}-${index}`}
+            
+            
+          >
             <NumberDisplay fact={fact} />
-          </TabsContent>
+          </TabStripTab>
         ))}
-      </Tabs>
+      </TabStrip>
     </div>
   );
 }

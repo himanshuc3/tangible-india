@@ -1,0 +1,15 @@
+.fact-card-tablist{
+    .k-tabstrip-content.k-active{
+        padding:0 ;
+    }
+    .k-tabstrip-items-wrapper{
+        margin-bottom: 10px;
+        border-bottom: none;
+    }
+
+    .k-tabstrip-item.k-active{
+        border-radius: 5px;
+        border: none;
+        background-color: var(--bg-card);
+    }
+}

@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+
 import {
   Card,
 } from '@progress/kendo-react-layout';
@@ -21,9 +21,9 @@ export default function About() {
           "statistical",
           "satirical",
         ].map((category) => (
-          <Badge key={category} variant="secondary" className="text-xs">
+          <span key={category}  className="text-xs">
             {category}
-          </Badge>
+          </span>
         ))}
       </div>
     </div>
