@@ -4,20 +4,16 @@ import {
   AppBarSection,
   AppBarSpacer,
 } from "@progress/kendo-react-layout";
-import { Badge, BadgeContainer } from "@progress/kendo-react-indicators";
 import {
   Tooltip,
   Popover,
-  PopoverActionsBar,
 } from "@progress/kendo-react-tooltip";
 import { Button } from "@progress/kendo-react-buttons";
 import {
-  bellIcon,
   infoSolidIcon,
-  codeIcon,
   arrowRightIcon,
   arrowLeftIcon,
-  caretAltUpIcon,
+  caretAltToTopIcon
 } from "@progress/kendo-svg-icons";
 
 import ThemeToggle from "@/components/ThemeToggle";
@@ -38,12 +34,12 @@ export default function Header() {
         anchor={infoAnchor.current && infoAnchor.current.element}
         position={"bottom"}
         title={"Keyboard Shortcuts"}
-        className="info-popover "
+        className="info-popover"
       >
         <ul className="flex flex-col gap-2 info-list">
           <li>
             <span>
-              <Button svgIcon={caretAltUpIcon} disabled={true}>
+              <Button svgIcon={caretAltToTopIcon} disabled={true}>
                 + K
               </Button>
             </span>{" "}
@@ -51,7 +47,7 @@ export default function Header() {
           </li>
           <li>
             <span>
-              <Button svgIcon={caretAltUpIcon} disabled={true}>
+              <Button svgIcon={caretAltToTopIcon} disabled={true}>
                 + J
               </Button>
             </span>{" "}
@@ -81,8 +77,7 @@ export default function Header() {
       <AppBarSpacer style={{ width: 32 }} />
 
       <AppBarSpacer />
-
-      {/* </AppBarSection> */}
+{/* TODO: Struggling with Animation with KendoReact, even with MCP */}
 
       <AppBarSection>
         <Button
@@ -99,7 +94,6 @@ export default function Header() {
           <Button
             type="button"
             fillMode="flat"
-            svgIcon={codeIcon}
             onClick={() =>
               window.open(
                 "https://github.com/himanshuc3/tangible-india/",
@@ -107,8 +101,8 @@ export default function Header() {
               )
             }
             title="Contribute your ideas, facts or questions on GitHub"
-            className="text-card-foreground"
-          ></Button>
+            className="text-card-foreground font-medium"
+          >Want to contribute?</Button>
         </Tooltip>
       </AppBarSection>
     </AppBar>
