@@ -1,8 +1,13 @@
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+} from "@progress/kendo-react-layout";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@progress/kendo-react-buttons";
+import {
+  chevronLeftIcon,
+  chevronRightIcon
+} from "@progress/kendo-svg-icons";
 import { useState } from "react";
 import NumberDisplay from "./NumberDisplay";
 import type { NumberFacts } from "@shared/schema";
@@ -65,21 +70,18 @@ export default function FactsCard({
 
             <div className="flex items-center gap-1">
               <Button
-                variant="outline"
-                size="icon"
                 onClick={() =>
                   handleFactChange(Math.max(0, activeFactIndex - 1))
                 }
+                svgIcon={chevronLeftIcon}
                 disabled={activeFactIndex === 0}
                 data-testid={`button-prev-fact-${number}`}
                 className="hover-elevate"
               >
-                <ChevronLeft className="h-4 w-4" />
               </Button>
 
               <Button
-                variant="outline"
-                size="icon"
+              svgIcon={chevronRightIcon}
                 onClick={() =>
                   handleFactChange(
                     Math.min(facts.length - 1, activeFactIndex + 1)
@@ -89,7 +91,6 @@ export default function FactsCard({
                 data-testid={`button-next-fact-${number}`}
                 className="hover-elevate"
               >
-                <ChevronRight className="h-4 w-4" />
               </Button>
             </div>
           </div>

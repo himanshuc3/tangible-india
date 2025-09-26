@@ -3,13 +3,6 @@ import { Button } from '@progress/kendo-react-buttons';
 import { useState } from "react";
 import {
   Card,
-  CardHeader,
-  CardTitle,
-  CardBody,
-  CardActions,
-  CardImage,
-  CardSubtitle,
-  Avatar,
 } from "@progress/kendo-react-layout";
 import type { Fact } from "@shared/schema";
 

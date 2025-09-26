@@ -4,14 +4,15 @@ import Header from "@/components/Header";
 import FactsCard from "@/components/FactsCard";
 import SearchBar from "@/components/SearchBar";
 import ProgressIndicator from "@/components/ProgressIndicator";
-import { Navigation } from '@progress/kendo-react-common';
-import {
-	Card,
-} from '@progress/kendo-react-layout';
+import { Navigation } from "@progress/kendo-react-common";
+import { Card } from "@progress/kendo-react-layout";
 import { Badge } from "@/components/ui/badge";
 import About from "@/components/About";
 import Statistics from "@/components/Statistics";
-import { Sparkles } from "lucide-react";
+import {
+  sparklesIcon
+} from "@progress/kendo-svg-icons";
+import { SvgIcon } from "@progress/kendo-react-common";
 import {
   mockFacts,
   groupFactsByNumber,
@@ -20,10 +21,12 @@ import {
   getFactsByNumber,
 } from "@/data/facts";
 import type { NumberFacts } from "@shared/schema";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 
 export default function Home() {
   // Initialize with grouped data
   const allNumberFacts = groupFactsByNumber(mockFacts);
+  
 
   const [currentNumberFacts, setCurrentNumberFacts] = useState<NumberFacts>(
     allNumberFacts[0]
@@ -34,61 +37,6 @@ export default function Home() {
     useState<NumberFacts[]>(allNumberFacts);
   const [isSearchMode, setIsSearchMode] = useState(false);
   const root = useRef<HTMLDivElement>(null);
-  const navigation = useMemo(
-        () =>
-            new Navigation({
-                root,
-                selectors: ['home-wrapper'],
-                keyboardEvents: {
-                    keydown: {
-                        ArrowRight: (target, nav, ev) => {
-                          console.log("right arrow pressed");
-                            ev.preventDefault();
-                            handleNext()
-                        },
-                        ArrowLeft: (target, nav, ev) => {
-                            ev.preventDefault();
-                            handlePrevious()
-                        }
-                    }
-                },
-                tabIndex: 0
-            }),
-        []
-    );
-
-    const onKeyDown = useCallback(navigation.triggerKeyboardEvent.bind(navigation), []);
-
-    useEffect(() => {
-
-      function onKeyDownEvent(event: KeyboardEvent) {
-        if (event.key === "ArrowRight") {
-          event.preventDefault();
-          handleNext();
-        } else if (event.key === "ArrowLeft") {
-          event.preventDefault();
-          handlePrevious();
-        }
-      }
-
-        const body = document.querySelector('body');
-        body?.addEventListener('keydown', onKeyDownEvent);
-        return () => body?.removeEventListener('keydown', onKeyDownEvent);
-    } , []);
-
-  // Handle search
-  const handleSearch = (query: string, category?: string) => {
-    const results = searchFactsGrouped(query, category);
-    setSearchResults(results);
-    setIsSearchMode(true);
-
-    if (results.length > 0) {
-      setCurrentNumberFacts(results[0]);
-      setCurrentNumberIndex(0);
-      setCurrentFactIndex(0);
-    }
-
-  };
 
   // Handle navigation between number groups
   const handleNext = () => {
@@ -101,6 +49,7 @@ export default function Home() {
     }
   };
 
+
   const handlePrevious = () => {
     const groups = isSearchMode ? searchResults : allNumberFacts;
     if (currentNumberIndex > 0) {
@@ -110,7 +59,50 @@ export default function Home() {
       setCurrentFactIndex(0); // Reset to first fact of previous number
     }
   };
+  
+  useKeyboardShortcuts({
+    onPrevFact: handlePrevious,
+    onNextFact: handleNext,
+    onToggleTheme: () => {
+      const html = document.querySelector("html");
+      if (html) {
+        if (html.classList.contains("dark")) {
+          html.classList.remove("dark");
+          localStorage.setItem("theme", "light");
+        } else {
+          html.classList.add("dark");
+          localStorage.setItem("theme", "dark");
+        }
+      }
+    },
+    onFocusSearchBar: () => {
+      const searchInput = document.getElementById(
+        "search-input"
+      ) as HTMLInputElement | null;
+      if (searchInput) {
+        searchInput.focus();
+      }
+    },
+  });
 
+ 
+
+ 
+
+  // Handle search
+  const handleSearch = (query: string, category?: string) => {
+    const results = searchFactsGrouped(query, category);
+    setSearchResults(results);
+    setIsSearchMode(true);
+
+    if (results.length > 0) {
+      setCurrentNumberFacts(results[0]);
+      setCurrentNumberIndex(0);
+      setCurrentFactIndex(0);
+    }
+  };
+
+  
   const handleReset = () => {
     setCurrentNumberIndex(0);
     setCurrentFactIndex(0);
@@ -150,7 +142,7 @@ export default function Home() {
   // Handle random fact
   const goToRandomFact = () => {
     const randomResult = getRandomNumberFacts();
-    const groups = allNumberFacts
+    const groups = allNumberFacts;
 
     setCurrentNumberIndex(randomResult.groupIndex);
     setCurrentFactIndex(randomResult.factIndex);
@@ -176,7 +168,10 @@ export default function Home() {
   const maxNumber = 1400000000; // India's population
 
   return (
-    <div className="min-h-screen bg-background home-wrapper" ref={root} onKeyDown={onKeyDown}>
+    <div
+      className="min-h-screen bg-background home-wrapper"
+      ref={root}
+    >
       {/* Header */}
       <Header />
 
@@ -205,21 +200,21 @@ export default function Home() {
         </div>
 
         {isSearchMode && (
-        <Card className="p-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium">
-              Found {searchResults.length} number
-              {searchResults.length !== 1 ? "s" : ""} with facts
-            </span>
-            {searchResults.length > 0 && (
-              <Badge variant="secondary" className="ml-auto">
-                Number {currentNumberIndex + 1} of {searchResults.length}
-              </Badge>
-            )}
-          </div>
-        </Card>
-      )}
+          <Card className="p-4">
+            <div className="flex items-center gap-2">
+              <SvgIcon icon={sparklesIcon} className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium">
+                Found {searchResults.length} number
+                {searchResults.length !== 1 ? "s" : ""} with facts
+              </span>
+              {searchResults.length > 0 && (
+                <Badge variant="secondary" className="ml-auto">
+                  Number {currentNumberIndex + 1} of {searchResults.length}
+                </Badge>
+              )}
+            </div>
+          </Card>
+        )}
 
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (
@@ -248,11 +243,9 @@ export default function Home() {
 
         {/* Footer Info */}
         <div className="flex gap-6">
-
-        {/* <Statistics /> */}
-        <About />
+          {/* <Statistics /> */}
+          <About />
         </div>
-        
       </main>
     </div>
   );
