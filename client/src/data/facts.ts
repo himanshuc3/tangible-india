@@ -40,11 +40,35 @@ export const mockFacts: Fact[] = [
     category: "statistical",
   },
   {
+    id: "15",
+    number: 3,
+    title: "Three Branches of Government",
+    description:
+      "India's democracy operates through three branches: Executive (Prime Minister and Council of Ministers), Legislative (Parliament with Lok Sabha and Rajya Sabha), and Judiciary (Supreme Court and High Courts). This separation ensures checks and balances.",
+    category: "historical",
+  },
+  {
     id: "4",
     number: 6,
     title: "Six Seasons of Wisdom",
     description:
       "While the world recognizes four seasons, ancient Indian texts describe six seasons (Ritu): Vasant (Spring), Grishma (Summer), Varsha (Monsoon), Sharad (Autumn), Shishir (Pre-winter), and Shita (Winter). This detailed seasonal understanding helped develop Ayurveda and agriculture.",
+    category: "cultural",
+  },
+  {
+    id: "13",
+    number: 7,
+    title: "Seven Sacred Rivers",
+    description:
+      "India reveres seven sacred rivers: Ganga, Yamuna, Godavari, Saraswati, Narmada, Sindhu, and Kaveri. These rivers are considered goddesses and are central to Hindu spirituality, with millions of pilgrims visiting their banks annually.",
+    category: "cultural",
+  },
+  {
+    id: "14",
+    number: 7,
+    title: "The Seven Sisters",
+    description:
+      "Northeast India's seven states - Assam, Arunachal Pradesh, Manipur, Meghalaya, Mizoram, Nagaland, and Tripura - are called the 'Seven Sisters'. This region hosts over 200 tribes speaking 400+ dialects, making it India's most ethnically diverse region.",
     category: "cultural",
   },
   {
@@ -140,32 +164,6 @@ export const mockFacts: Fact[] = [
         url: "https://indianexpress.com/article/cities/mumbai/concretisation-roads-bmc-highest-number-potholes-year-8888435/?utm_source=chatgpt.com"
       }
     ]
-  },
-  // Multiple facts for number 7 - demonstrating the multi-fact feature
-  {
-    id: "13",
-    number: 7,
-    title: "Seven Sacred Rivers",
-    description:
-      "India reveres seven sacred rivers: Ganga, Yamuna, Godavari, Saraswati, Narmada, Sindhu, and Kaveri. These rivers are considered goddesses and are central to Hindu spirituality, with millions of pilgrims visiting their banks annually.",
-    category: "cultural",
-  },
-  {
-    id: "14",
-    number: 7,
-    title: "The Seven Sisters",
-    description:
-      "Northeast India's seven states - Assam, Arunachal Pradesh, Manipur, Meghalaya, Mizoram, Nagaland, and Tripura - are called the 'Seven Sisters'. This region hosts over 200 tribes speaking 400+ dialects, making it India's most ethnically diverse region.",
-    category: "cultural",
-  },
-  // Multiple facts for number 3
-  {
-    id: "15",
-    number: 3,
-    title: "Three Branches of Government",
-    description:
-      "India's democracy operates through three branches: Executive (Prime Minister and Council of Ministers), Legislative (Parliament with Lok Sabha and Rajya Sabha), and Judiciary (Supreme Court and High Courts). This separation ensures checks and balances.",
-    category: "historical",
   },
 ];
 

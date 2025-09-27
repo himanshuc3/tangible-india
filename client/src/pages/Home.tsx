@@ -125,6 +125,13 @@ export default function Home() {
     );
   };
 
+  function goToFactIndex(index: number) {
+    const groups = isSearchMode ? searchResults : allNumberFacts;
+    setCurrentNumberIndex(index);
+    setCurrentNumberFacts(groups[index]);
+    setCurrentFactIndex(0);
+  }
+
   // Handle fact change within a number group
   const handleFactChange = (factIndex: number) => {
     setCurrentFactIndex(factIndex);
@@ -151,17 +158,18 @@ export default function Home() {
           currentNumberIndex={currentNumberIndex}
           goToRandomFact={goToRandomFact}
         />
-          <ProgressIndicator
-            currentNumber={currentNumberFacts.number}
-            totalNumbers={currentGroups.length}
-            currentIndex={currentNumberIndex}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            onReset={handleReset}
-            hasNext={currentNumberIndex < currentGroups.length - 1}
-            hasPrevious={currentNumberIndex > 0}
-            facts={allNumberFacts}
-          />
+        <ProgressIndicator
+          currentNumber={currentNumberFacts.number}
+          totalNumbers={currentGroups.length}
+          currentIndex={currentNumberIndex}
+          onNext={handleNext}
+          onPrevious={handlePrevious}
+          onReset={handleReset}
+          hasNext={currentNumberIndex < currentGroups.length - 1}
+          hasPrevious={currentNumberIndex > 0}
+          facts={allNumberFacts}
+          onFactChange={goToFactIndex}
+        />
 
         {/* Current Number Facts Display */}
         {currentGroups.length > 0 ? (

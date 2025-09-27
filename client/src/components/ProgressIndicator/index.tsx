@@ -2,7 +2,9 @@ import { chevronRightIcon, chevronLeftIcon } from "@progress/kendo-svg-icons";
 import { Button } from "@progress/kendo-react-buttons";
 import type { NumberFacts } from "@shared/schema";
 
-import { Slider, SliderLabel } from "@progress/kendo-react-inputs";
+import { Slider, SliderLabel, SliderChangeEvent } from "@progress/kendo-react-inputs";
+
+import './index.scss'
 
 interface ProgressIndicatorProps {
   currentNumber: number | string;
@@ -14,6 +16,7 @@ interface ProgressIndicatorProps {
   hasNext: boolean;
   hasPrevious: boolean;
   facts: NumberFacts[];
+  onFactChange: (index: number) => void;
 }
 
 const BILLION = 1_000_000_000;
@@ -21,15 +24,22 @@ const MILLION = 1_000_000;
 const THOUSAND = 1_000;
 function displayNumber(number: number): string {
   // billion, million, thousand, anything less
+  let display = 0
+  let suffix = ""
   if (number / BILLION >= 1) {
-    return number / BILLION + "B";
+    display = number / BILLION;
+    suffix = "B"
   } else if (number / MILLION >= 1) {
-    return number / MILLION + "M";
+    display = number / MILLION;
+    suffix = "M"
   } else if (number / THOUSAND >= 1) {
-    return number / THOUSAND + "K";
+    display = number / THOUSAND;
+    suffix = "K"
   } else {
-    return number + "";
+    display = number 
   }
+  
+  return String(display).indexOf(".") >= 0 ? display.toFixed(2) + suffix : display + suffix
 }
 
 export default function ProgressIndicator({
@@ -42,8 +52,32 @@ export default function ProgressIndicator({
   hasNext,
   hasPrevious,
   facts,
+  onFactChange
 }: ProgressIndicatorProps) {
   const progress = totalNumbers > 0 ? (currentIndex / totalNumbers) * 100 : 0;
+
+  function handleFactChange(event: SliderChangeEvent){
+    const roundedIndex = Math.round(event.value) - 1
+    
+    // Find facts with the same number value
+    const clubbedFacts = facts.reduce((acc, fact, index) => {
+      if(acc.length === 0) {
+        return [{number: fact.number,index, facts: [fact]}];
+      }
+      const lastGroup = acc[acc.length - 1];
+      if(lastGroup.number === fact.number) {
+        return [
+          ...acc.slice(0, -1),
+          { ...lastGroup, facts: [...lastGroup.facts, fact] }
+        ];
+      }
+      return [...acc, {number: fact.number,index, facts: [fact]}];
+    }, [] as Array<{number: number,index: number, facts: NumberFacts[]}>)
+
+
+    console.log(clubbedFacts[roundedIndex])
+    onFactChange(clubbedFacts[roundedIndex].index);
+  }
 
   return (
     <div className="w-3/4 flex flex-col m-auto">
@@ -52,8 +86,10 @@ export default function ProgressIndicator({
         value={currentIndex + 1}
         min={1}
         max={totalNumbers}
-        className="elative h-20 w-full overflow-hidden rounded-full "
-        data-testid="progress-indicator "
+        className="elative h-20 w-full overflow-hidden rounded-full progress-indicator"
+        data-testid="progress-indicator"
+        onChange={handleFactChange}
+        buttons={true}
       >
         {facts.map(({ number }, i) => (
           <SliderLabel key={i} position={i + 1}>
@@ -65,7 +101,7 @@ export default function ProgressIndicator({
         <Button
           svgIcon={chevronLeftIcon}
           type="button"
-          fillMode={"outline"}
+          fillMode={"flat"}
           disabled={!hasPrevious}
           onClick={onPrevious}
         ></Button>
@@ -76,7 +112,7 @@ export default function ProgressIndicator({
         <Button
           svgIcon={chevronRightIcon}
           type="button"
-          fillMode={"outline"}
+          fillMode={"flat"}
           disabled={!hasNext}
           onClick={onNext}
         ></Button>
