@@ -7,8 +7,6 @@ import ProgressIndicator from "@/components/ProgressIndicator";
 import { Card } from "@progress/kendo-react-layout";
 import About from "@/components/About";
 import Statistics from "@/components/Statistics";
-import { sparklesIcon } from "@progress/kendo-svg-icons";
-import { SvgIcon } from "@progress/kendo-react-common";
 import {
   mockFacts,
   groupFactsByNumber,
