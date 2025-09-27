@@ -6,21 +6,21 @@ export const mockFacts: Fact[] = [
     id: "1",
     number: 0,
     title: "0️⃣ The Invention of Zero",
-    description:
-      "<b>Aryabhatta</b>, the great Indian mathematician and astronomer (476-550 CE), is credited with the invention of zero as both a placeholder and a number. This revolutionary concept transformed mathematics globally, making complex calculations possible and laying the foundation for modern computing and digital technology.",
+    description: [
+      "<b>Aryabhatta</b>, the great Indian mathematician and astronomer (476-550 CE), is credited with the invention of zero",
+      "It was one of the most important inventions for simplying algebraic equations."
+    ],
     category: "historical",
     source: [
       {
         name: "Who invented zero?",
-        url: "https://www.open.ac.uk/blogs/MathEd/index.php/2022/08/25/the-men-who-invented-zero/"
+        url: "https://www.open.ac.uk/blogs/MathEd/index.php/2022/08/25/the-men-who-invented-zero/",
       },
-     { name: "History of Zero",
-      url: "https://en.wikipedia.org/wiki/0",
-     },
-     {
-      name: "Aryabhata - wikipedia",
-      url: "https://en.wikipedia.org/wiki/Aryabhata",
-     }
+      { name: "History of Zero", url: "https://en.wikipedia.org/wiki/0" },
+      {
+        name: "Aryabhata - wikipedia",
+        url: "https://en.wikipedia.org/wiki/Aryabhata",
+      },
     ],
   },
   {
@@ -73,9 +73,9 @@ export const mockFacts: Fact[] = [
     source: [
       {
         name: "Live World air quality Index",
-        url: "https://www.iqair.com/world-air-quality-ranking"
-      }
-    ]
+        url: "https://www.iqair.com/world-air-quality-ranking",
+      },
+    ],
   },
   {
     id: "4",
@@ -97,16 +97,14 @@ export const mockFacts: Fact[] = [
     id: "25",
     number: 7,
     title: "The Thala Prodigy",
-    description:
-      "TODO",
+    description: "TODO",
     category: "cultural",
   },
   {
     id: "26",
     number: 7,
     title: "Taj Mahal is one of the 7 wonders",
-    description:
-      `<p>Others on the list include: </p>
+    description: `<p>Others on the list include: </p>
         <ul>
           <li>Great Wall of China</li>
           <li>Petra</li>
@@ -154,8 +152,7 @@ export const mockFacts: Fact[] = [
     id: "108",
     number: 118,
     title: "😢 India on Happiness Index",
-    description:
-      `<p>India’s 118ᵗʰ position in the World Happiness Report 2025 is jarring, especially when one notes that even nations torn by conflict—such as Ukraine (ranked 111) and Israel (ranked 8)—are placed ahead of it.</p> 
+    description: `<p>India’s 118ᵗʰ position in the World Happiness Report 2025 is jarring, especially when one notes that even nations torn by conflict—such as Ukraine (ranked 111) and Israel (ranked 8)—are placed ahead of it.</p> 
       <p>Further, while 2/3rd of the population is happy in the ICT's success over Pakistan and the rest of the population is happy making memes about it, it begs to differ why the remaining non-existant population is still on average sad than Pakistan's population (109).</p>
       `,
     category: "satirical",
@@ -163,21 +160,21 @@ export const mockFacts: Fact[] = [
       {
         name: "World Happiness Report 2025",
         url: "https://www.worldhappiness.report/",
-      }
-    ]
+      },
+    ],
   },
   {
     id: "122",
     number: 122,
     title: "Major Languages spoken in India",
-    description:"TODO",
-      category: "achievement",
+    description: "TODO",
+    category: "achievement",
     source: [
       {
         name: "Languages of India - Wiki",
-        url: "https://en.wikipedia.org/wiki/Languages_of_India"
-      }
-    ]
+        url: "https://en.wikipedia.org/wiki/Languages_of_India",
+      },
+    ],
   },
   {
     id: "8",
@@ -191,8 +188,7 @@ export const mockFacts: Fact[] = [
     id: "1947",
     number: 1947,
     title: "Independence Day",
-    description:
-      "TODO",
+    description: "TODO",
     category: "historical",
   },
   {
@@ -223,8 +219,7 @@ export const mockFacts: Fact[] = [
     id: "707M",
     number: 707_000_000,
     title: "UPI transactions / day",
-    description:
-      "TODO",
+    description: "TODO",
     category: "statistical",
   },
   {
@@ -245,9 +240,9 @@ export const mockFacts: Fact[] = [
     source: [
       {
         name: "Mumbai's pothole count 2023",
-        url: "https://indianexpress.com/article/cities/mumbai/concretisation-roads-bmc-highest-number-potholes-year-8888435/?utm_source=chatgpt.com"
-      }
-    ]
+        url: "https://indianexpress.com/article/cities/mumbai/concretisation-roads-bmc-highest-number-potholes-year-8888435/?utm_source=chatgpt.com",
+      },
+    ],
   },
 ];
 
@@ -265,7 +260,7 @@ export function searchFacts(query: string, category?: string[]): Fact[] {
   }
 
   // Search by number or text content
-  // NOTE: 
+  // NOTE:
   // 1. Provide better search functionality - fuzzy search, typo tolerance (closest distance to change threshold) etc.
   const searchTerm = query.toLowerCase();
   return results.filter(

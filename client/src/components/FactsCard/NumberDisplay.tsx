@@ -1,16 +1,27 @@
 import { Button } from "@progress/kendo-react-buttons";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card } from "@progress/kendo-react-layout";
 import type { Fact } from "@shared/schema";
-import {
-  Badge,
-  BadgeContainer,
-  Loader,
-  Skeleton,
-} from "@progress/kendo-react-indicators";
+import { Rerousel } from "rerousel";
 import { getCategoryColor } from "@/lib/utils";
+import { CATEGORIES } from "@/lib/constants";
+import Slider from "@ant-design/react-slick";
 
-import "./index.scss"
+// Import css files
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./index.scss";
+
+var settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  arrows: false,
+  slidesToScroll: 1,
+  autoplaySpeed: 5000,
+  autoplay: true
+};
 
 const CATEGORY_RING_COLOR = {
   achievement: "ring-accent",
@@ -30,8 +41,8 @@ export default function NumberDisplay({
   fact,
   showFullDescription = false,
 }: NumberDisplayProps) {
-  const [isExpanded, setIsExpanded] = useState(showFullDescription);
-  const categoryStyles = getCategoryColor(fact.category)
+  // const [isExpanded, setIsExpanded] = useState(showFullDescription);
+  const categoryStyles = getCategoryColor(fact.category);
   return (
     <Card
       className={`shadcn-card rounded-xl border bg-card border-card-border text-card-foreground shadow-sm p-6 space-y-4 hover-elevate transition-all duration-200 ring-2 ${
@@ -51,46 +62,42 @@ export default function NumberDisplay({
         <div className="flex items-center gap-2">
           <Button className={`${getCategoryColor(fact.category).classNames}`}>
             {fact.category}
-           
           </Button>
-         
         </div>
       </div>
 
       <div className="border-t pt-4 space-y-2">
         <h3
-          className={`text-3xl font-semibold mb-2 ${getCategoryColor(fact.category).textColorClassName}`}
+          className={`text-3xl font-semibold mb-2 ${
+            getCategoryColor(fact.category).textColorClassName
+          }`}
           data-testid={`text-title-${fact.id}`}
         >
           {fact.title}
         </h3>
 
-        <div
-          className={`text-lg mx-6 p-2 border rounded-md background ${
-            !isExpanded && fact.description.length > 200 ? "line-clamp-3" : ""
-          }`}
-        >
-          <p
-            data-testid={`text-description-${fact.id}`}
-            dangerouslySetInnerHTML={{ __html: fact.description }}
-          />
+        <div className={`text-xl mx-20 p-3 border rounded-md bg-secondary font-medium my-3 description-container`}>
+          {!Array.isArray(fact.description) ? (
+            <p
+              data-testid={`text-description-${fact.id}`}
+              dangerouslySetInnerHTML={{ __html: fact.description }}
+            />
+          ) : (
+            <div>
+            <Slider {...settings}>
+              {fact.description.map((d) => (
+                <div dangerouslySetInnerHTML={{ __html: d }}></div>
+              ))}
+            </Slider>
+            </div>
+          )}
         </div>
-
-        {fact.description.length > 200 && !showFullDescription && (
-          <div className="flex grow w-full justify-end">
-            <Button
-              onClick={() => setIsExpanded(!isExpanded)}
-              data-testid={`button-expand-${fact.id}`}
-              className="mt-2 border-none p-0 h-auto text-foreground hover-elevate  mr-6 bg-card font-medium hover:bg-secondary p-1"
-            >
-              {isExpanded ? "Show less" : "Read more"}
-            </Button>
-          </div>
-        )}
       </div>
 
       {fact.source ? (
-        <div className={`flex items-center gap-2 pt-2 border-t ${categoryStyles.textColorClassName}`}>
+        <div
+          className={`flex items-center gap-2 pt-2 border-t ${categoryStyles.textColorClassName}`}
+        >
           {fact.source.map(({ name, url }, index) => (
             <a
               href={url}

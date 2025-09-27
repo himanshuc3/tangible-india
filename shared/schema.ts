@@ -4,7 +4,7 @@ export const factSchema = z.object({
   id: z.string(),
   number: z.number(), // Supports both integers and decimals as strings
   title: z.string(),
-  description: z.string(),
+  description: z.union([z.string(), z.array(z.string())]),
   category: z.enum([
     "historical",
     "satirical",
@@ -12,12 +12,14 @@ export const factSchema = z.object({
     "statistical",
     "cultural",
   ]),
-  source: z.array(
-            z.object({
-              name: z.string(),
-              url: z.string().url(),
-            })
-          ).optional()
+  source: z
+    .array(
+      z.object({
+        name: z.string(),
+        url: z.string().url(),
+      })
+    )
+    .optional(),
 });
 
 export type Fact = z.infer<typeof factSchema>;
