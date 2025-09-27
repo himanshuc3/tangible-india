@@ -1,4 +1,4 @@
-import { animate, createScope, createSpring, createDraggable } from "animejs";
+// import { animate, createScope, createSpring, createDraggable } from "animejs";
 import { useEffect, useRef, useState } from "react";
 
 
@@ -16,7 +16,7 @@ export default function Title() {
   const flagTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    scope.current = createScope({ root }).add((self) => {
+    // scope.current = createScope({ root }).add((self) => {
       // Scramble animation for each character
       const chars = Array.from(document.querySelectorAll(".title-character"));
       const finalChars = HEADING.split("");
@@ -50,11 +50,11 @@ export default function Title() {
         };
         setTimeout(scramble, idx * 300); // stagger start
       });
-    });
+    // });
 
     // Properly cleanup all anime.js instances declared inside the scope
     return () => {
-      scope.current?.revert();
+      // scope.current?.revert();
       if (flagTimeout.current) clearTimeout(flagTimeout.current);
     };
   }, []);

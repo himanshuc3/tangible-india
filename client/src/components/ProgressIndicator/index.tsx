@@ -80,14 +80,13 @@ export default function ProgressIndicator({
   }
 
   return (
-    <div className="w-3/4 flex flex-col m-auto">
+    <div className="flex flex-col m-auto">
       <Slider
         step={1}
         value={currentIndex + 1}
         min={1}
         max={totalNumbers}
-        className="elative h-20 w-full overflow-hidden rounded-full progress-indicator text-foreground"
-        data-testid="progress-indicator"
+        className="elative h-20 w-full text-foreground progress-indicator"
         onChange={handleFactChange}
         buttons={true}
       >

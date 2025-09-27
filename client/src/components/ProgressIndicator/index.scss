@@ -2,4 +2,8 @@
     .k-button-decrease, .k-button-increase {
         opacity: 0;
     }
+     .k-slider, .k-slider-selection, .k-draghandle{
+        background-color: hsl(var(--primary)) !important;
+        border-color: hsl(var(--primary)) !important
+    }
 }

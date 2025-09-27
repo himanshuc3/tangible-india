@@ -32,6 +32,14 @@ export const mockFacts: Fact[] = [
     category: "cultural",
   },
   {
+    id: "21",
+    number: 1,
+    title: "⚡️ Adani power's lease-t interested ",
+    description:
+      "Adani power has received a lease of 1,020 acres in Bihar for Rs 1/acre/year (time to invest in some stocks❓). Even though Adani Power will be generating the electricity in homes, the company itself seems to be powered by the Government.",
+    category: "cultural",
+  },
+  {
     id: "3",
     number: 2,
     title: "The Two Monsoons",
@@ -48,6 +56,28 @@ export const mockFacts: Fact[] = [
     category: "historical",
   },
   {
+    id: "20",
+    number: 4,
+    title: "💸 World's 4th largest economy",
+    description:
+      "India's democracy operates through three branches: Executive (Prime Minister and Council of Ministers), Legislative (Parliament with Lok Sabha and Rajya Sabha), and Judiciary (Supreme Court and High Courts). This separation ensures checks and balances.",
+    category: "achievement",
+  },
+  {
+    id: "30",
+    number: 5,
+    title: "💸 World's 5th most polluted country",
+    description:
+      "New delhi (my hometown) topping the charts of the most polluted city (air quality) in the world on a consistent basis.",
+    category: "achievement",
+    source: [
+      {
+        name: "Live World air quality Index",
+        url: "https://www.iqair.com/world-air-quality-ranking"
+      }
+    ]
+  },
+  {
     id: "4",
     number: 6,
     title: "Six Seasons of Wisdom",
@@ -61,6 +91,31 @@ export const mockFacts: Fact[] = [
     title: "Seven Sacred Rivers",
     description:
       "India reveres seven sacred rivers: Ganga, Yamuna, Godavari, Saraswati, Narmada, Sindhu, and Kaveri. These rivers are considered goddesses and are central to Hindu spirituality, with millions of pilgrims visiting their banks annually.",
+    category: "cultural",
+  },
+  {
+    id: "25",
+    number: 7,
+    title: "The Thala Prodigy",
+    description:
+      "TODO",
+    category: "cultural",
+  },
+  {
+    id: "26",
+    number: 7,
+    title: "Taj Mahal is one of the 7 wonders",
+    description:
+      `<p>Others on the list include: </p>
+        <ul>
+          <li>Great Wall of China</li>
+          <li>Petra</li>
+          <li>Colosseum</li>
+          <li>Chichén Itzá</li>
+          <li>Machu Picchu</li>
+          <li>Christ the Redeemer</li>
+        </ul>
+      `,
     category: "cultural",
   },
   {
@@ -112,12 +167,33 @@ export const mockFacts: Fact[] = [
     ]
   },
   {
+    id: "122",
+    number: 122,
+    title: "Major Languages spoken in India",
+    description:"TODO",
+      category: "achievement",
+    source: [
+      {
+        name: "Languages of India - Wiki",
+        url: "https://en.wikipedia.org/wiki/Languages_of_India"
+      }
+    ]
+  },
+  {
     id: "8",
     number: 365,
     title: "Ancient Calendar Precision",
     description:
       "Over 1,500 years ago, the Indian mathematician Aryabhatta calculated the length of a year as 365.2563627 days - remarkably close to the modern value of 365.256363004 days. This precision was achieved without modern instruments!",
     category: "achievement",
+  },
+  {
+    id: "1947",
+    number: 1947,
+    title: "Independence Day",
+    description:
+      "TODO",
+    category: "historical",
   },
   {
     id: "9",
@@ -141,6 +217,14 @@ export const mockFacts: Fact[] = [
     title: "The Chai-wallah Economy",
     description:
       "India consumes over 400,000 tons of tea annually, with 70% being consumed domestically. There are an estimated 1 million tea vendors across the country, creating a parallel economy worth billions. From railway stations to corporate boardrooms, chai fuels the nation!",
+    category: "statistical",
+  },
+  {
+    id: "707M",
+    number: 707_000_000,
+    title: "UPI transactions / day",
+    description:
+      "TODO",
     category: "statistical",
   },
   {
