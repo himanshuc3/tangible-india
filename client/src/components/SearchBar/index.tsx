@@ -9,11 +9,7 @@ import {
   Chip,
 } from "@progress/kendo-react-buttons";
 import {
-  binocularsIcon,
-  bicycleIcon,
-  bellIcon,
   caretAltToTopIcon,
-  chartRadarIcon,
   searchIcon,
   sparklesIcon,
 } from "@progress/kendo-svg-icons";
@@ -21,6 +17,7 @@ import { useState } from "react";
 
 import "./index.scss";
 import { getCategoryColor } from "@/lib/utils";
+import { CATEGORIES } from "@/lib/constants";
 
 interface SearchBarProps {
   onSearch: (query: string, category?: string) => void;
@@ -31,13 +28,6 @@ interface SearchBarProps {
   goToRandomFact: () => void;
 }
 
-const categories = [
-  { value: "historical", text: "Historical", icon: binocularsIcon },
-  { value: "satirical", text: "Satirical", icon: chartRadarIcon },
-  { value: "achievement", text: "Achievements", icon: bicycleIcon },
-  { value: "statistical", text: "Statistical", icon: bellIcon },
-  { value: "cultural", text: "Cultural", icon: caretAltToTopIcon },
-];
 
 export default function SearchBar({
   onSearch,
@@ -48,7 +38,7 @@ export default function SearchBar({
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string[]>(
-    categories.map((c) => c.value)
+    CATEGORIES.map((c) => c.value)
   );
 
   const handleSearch = () => {
@@ -73,7 +63,7 @@ export default function SearchBar({
   useEffect(() => {
     if (!isSearchMode) {
       setQuery("");
-      setSelectedCategory(categories.map((c) => c.value));
+      setSelectedCategory(CATEGORIES.map((c) => c.value));
     }
   }, [isSearchMode]);
 
@@ -131,7 +121,7 @@ export default function SearchBar({
 
         <div className="categories flex items-center gap-2">
           <ChipList
-            defaultData={categories}
+            defaultData={CATEGORIES}
             defaultValue={selectedCategory}
             selection="multiple"
             value={selectedCategory}

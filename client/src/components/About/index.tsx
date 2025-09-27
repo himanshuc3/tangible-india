@@ -1,4 +1,7 @@
 import { Card } from "@progress/kendo-react-layout";
+import { Button } from "@progress/kendo-react-buttons";
+import { CATEGORIES } from "@/lib/constants";
+
 
 export default function About() {
   return (
@@ -11,17 +14,11 @@ export default function About() {
           cultural, satirical, or statistical. Discover the tangible facts that
           make India unique!
         </p>
-        <div className="flex justify-center gap-2 flex-wrap">
-          {[
-            "historical",
-            "cultural",
-            "achievement",
-            "statistical",
-            "satirical",
-          ].map((category) => (
-            <span key={category} className="text-xs">
-              {category}
-            </span>
+        <div className="flex justify-center gap-2 flex-wrap ">
+          {CATEGORIES.map(({text}) => (
+            <Button key={text} className="text-xs bg-secondary text-foreground">
+              {text}
+            </Button>
           ))}
         </div>
       </div>

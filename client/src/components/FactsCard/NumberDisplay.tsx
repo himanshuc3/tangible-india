@@ -81,7 +81,7 @@ export default function NumberDisplay({
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
               data-testid={`button-expand-${fact.id}`}
-              className="mt-2 border-none p-0 h-auto text-foreground hover-elevate  mr-6 bg-card font-medium text-"
+              className="mt-2 border-none p-0 h-auto text-foreground hover-elevate  mr-6 bg-card font-medium hover:bg-secondary p-1"
             >
               {isExpanded ? "Show less" : "Read more"}
             </Button>
@@ -95,7 +95,7 @@ export default function NumberDisplay({
             <a
               href={url}
               target="_blank"
-              className="p-0 h-auto text-sm hover-elevate reference-link"
+              className="p-0 h-auto text-sm hover-elevate reference-link p-1"
               data-testid={`button-source-${fact.id}`}
             >
               {name}
