@@ -1,9 +1,16 @@
-import { Button } from '@progress/kendo-react-buttons';
+import { Button } from "@progress/kendo-react-buttons";
 import { useState } from "react";
-import {
-  Card,
-} from "@progress/kendo-react-layout";
+import { Card } from "@progress/kendo-react-layout";
 import type { Fact } from "@shared/schema";
+import {
+  Badge,
+  BadgeContainer,
+  Loader,
+  Skeleton,
+} from "@progress/kendo-react-indicators";
+import { getCategoryColor } from "@/lib/utils";
+
+import "./index.scss"
 
 const CATEGORY_RING_COLOR = {
   achievement: "ring-accent",
@@ -24,24 +31,7 @@ export default function NumberDisplay({
   showFullDescription = false,
 }: NumberDisplayProps) {
   const [isExpanded, setIsExpanded] = useState(showFullDescription);
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "achievement":
-        return "bg-accent text-accent-foreground";
-      case "satirical":
-        return "bg-destructive text-destructive-foreground";
-      case "historical":
-        return "bg-primary text-primary-foreground";
-      case "statistical":
-        return "bg-chart-3 text-primary-foreground";
-      case "cultural":
-        return "bg-chart-5 text-primary-foreground";
-      default:
-        return "bg-secondary text-secondary-foreground";
-    }
-  };
-
+  const categoryStyles = getCategoryColor(fact.category)
   return (
     <Card
       className={`shadcn-card rounded-xl border bg-card border-card-border text-card-foreground shadow-sm p-6 space-y-4 hover-elevate transition-all duration-200 ring-2 ${
@@ -50,25 +40,26 @@ export default function NumberDisplay({
     >
       <div className="flex items-center justify-between">
         <div
-          className="text-6xl font-bold text-primary font-mono flex items-base"
+          className={`text-6xl font-bold font-mono flex items-base ${
+            getCategoryColor(fact.category).textColorClassName
+          }`}
           data-testid={`text-number-${fact.id}`}
         >
           <span className="text-xl mt-1">#</span>
           <span>{fact.number}</span>
         </div>
         <div className="flex items-center gap-2">
-          <span
-            className={getCategoryColor(fact.category)}
-            data-testid={`badge-category-${fact.id}`}
-          >
+          <Button className={`${getCategoryColor(fact.category).classNames}`}>
             {fact.category}
-          </span>
+           
+          </Button>
+         
         </div>
       </div>
 
       <div className="border-t pt-4 space-y-2">
         <h3
-          className="text-3xl font-semibold mb-2"
+          className={`text-3xl font-semibold mb-2 ${getCategoryColor(fact.category).textColorClassName}`}
           data-testid={`text-title-${fact.id}`}
         >
           {fact.title}
@@ -79,37 +70,39 @@ export default function NumberDisplay({
             !isExpanded && fact.description.length > 200 ? "line-clamp-3" : ""
           }`}
         >
-          <p data-testid={`text-description-${fact.id}`} dangerouslySetInnerHTML={{__html: fact.description}} />
+          <p
+            data-testid={`text-description-${fact.id}`}
+            dangerouslySetInnerHTML={{ __html: fact.description }}
+          />
         </div>
 
         {fact.description.length > 200 && !showFullDescription && (
           <div className="flex grow w-full justify-end">
-          <Button
-          
-            onClick={() => setIsExpanded(!isExpanded)}
-            data-testid={`button-expand-${fact.id}`}
-            className="mt-2 background-transparent border-none p-0 h-auto text-primary hover-elevate  mr-6"
-          >
-            {isExpanded ? "Show less" : "Read more"}
-          </Button>
+            <Button
+              onClick={() => setIsExpanded(!isExpanded)}
+              data-testid={`button-expand-${fact.id}`}
+              className="mt-2 border-none p-0 h-auto text-foreground hover-elevate  mr-6 bg-card font-medium text-"
+            >
+              {isExpanded ? "Show less" : "Read more"}
+            </Button>
           </div>
         )}
       </div>
 
       {fact.source ? (
-        
-        <div className="flex items-center gap-2 pt-2 border-t">
-          {fact.source.map(({name, url}, index) => (
-          <a
-            href={url}
-            className="p-0 h-auto text-sm text-primary hover-elevate "
-            data-testid={`button-source-${fact.id}`}
-          >
-            {name}
-          </a>
+        <div className={`flex items-center gap-2 pt-2 border-t ${categoryStyles.textColorClassName}`}>
+          {fact.source.map(({ name, url }, index) => (
+            <a
+              href={url}
+              target="_blank"
+              className="p-0 h-auto text-sm hover-elevate reference-link"
+              data-testid={`button-source-${fact.id}`}
+            >
+              {name}
+            </a>
           ))}
         </div>
-      ): null}
+      ) : null}
     </Card>
   );
 }

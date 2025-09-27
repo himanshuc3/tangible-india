@@ -167,7 +167,7 @@ export default function Home() {
           onReset={handleReset}
           hasNext={currentNumberIndex < currentGroups.length - 1}
           hasPrevious={currentNumberIndex > 0}
-          facts={allNumberFacts}
+          facts={searchResults}
           onFactChange={goToFactIndex}
         />
 

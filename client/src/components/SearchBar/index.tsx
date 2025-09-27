@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 
 import "./index.scss";
+import { getCategoryColor } from "@/lib/utils";
 
 interface SearchBarProps {
   onSearch: (query: string, category?: string) => void;
@@ -67,40 +68,7 @@ export default function SearchBar({
     onSearch(query, selectedValues);
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "achievement":
-        return {
-          backgroundColor: "hsl(var(--chart-2))",
-          color: "hsl(var(--primary-foreground))",
-        };
-      case "satirical":
-        return {
-          backgroundColor: "hsl(var(--destructive))",
-          color: "hsl(var(--primary-foreground))",
-        };
-      case "historical":
-        return {
-          backgroundColor: "hsl(var(--primary))",
-          color: "hsl(var(--primary-foreground))",
-        };
-      case "statistical":
-        return {
-          backgroundColor: "hsl(var(--chart-3))",
-          color: "hsl(var(--primary-foreground))",
-        };
-      case "cultural":
-        return {
-          backgroundColor: "hsl(var(--chart-5))",
-          color: "hsl(var(--primary-foreground))",
-        };
-      default:
-        return {
-           backgroundColor: "hsl(var(--secondary))",
-          color: "hsl(var(--primary-foreground))",
-        }
-    }
-  };
+  
 
   useEffect(() => {
     if (!isSearchMode) {

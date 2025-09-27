@@ -86,7 +86,7 @@ export default function ProgressIndicator({
         value={currentIndex + 1}
         min={1}
         max={totalNumbers}
-        className="elative h-20 w-full overflow-hidden rounded-full progress-indicator"
+        className="elative h-20 w-full overflow-hidden rounded-full progress-indicator text-foreground"
         data-testid="progress-indicator"
         onChange={handleFactChange}
         buttons={true}
