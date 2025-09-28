@@ -351,7 +351,7 @@ export const mockFacts: Fact[] = [
   {
     id: "707M",
     number: 707_000_000,
-    title: "UPI transactions / day",
+    title: "📱 UPI transactions / day",
     description: [
       "Unified Payments Interface (UPI) has been the preferred payment method for micro-transactions since it's inception.",
     ],
@@ -398,7 +398,8 @@ export const mockFacts: Fact[] = [
         url: "https://indianexpress.com/article/cities/mumbai/concretisation-roads-bmc-highest-number-potholes-year-8888435/?utm_source=chatgpt.com",
       },
       {
-
+        name: "State of Namma Bengaluru footpaths",
+        url: "https://www.youtube.com/shorts/DAHGjp4OnG8"
       }
     ],
   },
