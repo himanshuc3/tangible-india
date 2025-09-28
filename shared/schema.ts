@@ -11,6 +11,7 @@ export const factSchema = z.object({
     "achievement",
     "statistical",
     "cultural",
+    "meme"
   ]),
   source: z
     .array(

@@ -123,7 +123,7 @@ export default function FactsCard({
         {facts.map((fact, index) => (
           <TabStripTab
             key={fact.id}
-            title={`Fact ${index + 1}`}
+            title={`#${index + 1}`}
             data-testid={`tab-trigger-${number}-${index}`}
             
           >

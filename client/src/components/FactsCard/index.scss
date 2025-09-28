@@ -7,6 +7,10 @@
         border-bottom: none;
     }
 
+    .k-tabstrip-content .k-animation-container {
+        width:100%;
+    }
+
 
     .k-tabstrip-item {
         background-color: hsl(var(--secondary));

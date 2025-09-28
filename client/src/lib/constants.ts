@@ -4,6 +4,7 @@ import {
   bellIcon,
   caretAltToTopIcon,
   chartRadarIcon,
+  planIcon
 } from "@progress/kendo-svg-icons";
 
 export const CATEGORIES = [
@@ -12,4 +13,5 @@ export const CATEGORIES = [
   { value: "achievement", text: "Achievements", icon: bicycleIcon },
   { value: "statistical", text: "Statistical", icon: bellIcon },
   { value: "cultural", text: "Cultural", icon: caretAltToTopIcon },
+  { value: "meme", text: "meme", icon: planIcon },
 ];

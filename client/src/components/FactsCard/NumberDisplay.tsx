@@ -17,33 +17,36 @@ var settings = {
   arrows: false,
   slidesToScroll: 1,
   autoplaySpeed: 5000,
-  autoplay: true
+  autoplay: true,
 };
 
 const CATEGORY_RING_COLOR = {
-  achievement: "ring-accent",
-  satirical: "ring-destructive",
-  historical: "ring-primary",
-  statistical: "ring-chart-3",
-  cultural: "ring-chart-5",
-  default: "ring-secondary",
+  achievement: "border border-2 border-chart-2",
+  satirical: "border border-2 border-destructive",
+  historical: "border border-2 border-primary",
+  statistical: "border border-2 border-chart-3",
+  cultural: "border border-2 border-chart-5",
+  meme: "border border-2 border-chart-4",
+  default: "border border-2 border-secondary",
 };
 
 interface NumberDisplayProps {
   fact: Fact;
-  showFullDescription?: boolean;
 }
 
-export default function NumberDisplay({
-  fact,
-  showFullDescription = false,
-}: NumberDisplayProps) {
-  // const [isExpanded, setIsExpanded] = useState(showFullDescription);
+function formatNumber(currentNumber: number) {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  }).format(currentNumber);
+}
+
+export default function NumberDisplay({ fact }: NumberDisplayProps) {
   const categoryStyles = getCategoryColor(fact.category);
-  console.log()
+  console.log(fact.description);
   return (
     <Card
-      className={`shadcn-card rounded-xl border bg-card border-card-border text-card-foreground shadow-sm p-6 space-y-4 hover-elevate transition-all duration-200 ring-2 ${
+      className={`shadcn-card rounded-xl bg-card border-card-border text-card-foreground shadow-sm p-6 space-y-4 hover-elevate transition-all duration-200 ${
         CATEGORY_RING_COLOR[fact.category]
       }`}
     >
@@ -55,7 +58,7 @@ export default function NumberDisplay({
           data-testid={`text-number-${fact.id}`}
         >
           <span className="text-xl mt-1">#</span>
-          <span>{fact.number}</span>
+          <span>{fact.number === 1947 ? 1947 : formatNumber(fact.number)}</span>
         </div>
         <div className="flex items-center gap-2">
           <Button className={`${getCategoryColor(fact.category).classNames}`}>
@@ -74,7 +77,9 @@ export default function NumberDisplay({
           {fact.title}
         </h3>
 
-        <div className={`text-xl mx-20 p-3 border rounded-md bg-secondary font-medium my-3 description-container`}>
+        <div
+          className={`text-xl mx-20 p-3 border rounded-md bg-secondary font-medium my-3 description-container`}
+        >
           {!Array.isArray(fact.description) ? (
             <p
               data-testid={`text-description-${fact.id}`}
@@ -82,11 +87,11 @@ export default function NumberDisplay({
             />
           ) : (
             <div>
-            <Slider {...settings}>
-              {fact.description.map((d) => (
-                <div dangerouslySetInnerHTML={{ __html: d }}></div>
-              ))}
-            </Slider>
+              <Slider {...settings}>
+                {fact.description.map((d) => (
+                  <div dangerouslySetInnerHTML={{ __html: d }}></div>
+                ))}
+              </Slider>
             </div>
           )}
         </div>
