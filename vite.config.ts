@@ -27,7 +27,13 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        format: 'iife'
+      }
+    }
   },
+  base: '/tangible-india/',
   server: {
     fs: {
       strict: true,
