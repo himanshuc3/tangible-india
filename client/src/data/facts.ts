@@ -8,7 +8,7 @@ export const mockFacts: Fact[] = [
     title: "0️⃣ The Invention of Zero",
     description: [
       "<b>Aryabhatta</b>, the great Indian mathematician and astronomer (476-550 CE), is credited with the invention of zero",
-      "It was one of the most important inventions for simplying algebraic equations."
+      "<i>Aryabhatiya</i>, a compendium of mathematics and astronomy, also introduced the concept of place-value in number system."
     ],
     category: "historical",
     source: [

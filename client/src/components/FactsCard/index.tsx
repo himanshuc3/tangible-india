@@ -3,15 +3,14 @@ import { Button } from "@progress/kendo-react-buttons";
 import {
   TabStrip,
   TabStripTab,
-  TabStripSelectEventArguments
+  TabStripSelectEventArguments,
 } from "@progress/kendo-react-layout";
 import { chevronLeftIcon, chevronRightIcon } from "@progress/kendo-svg-icons";
 import { useState } from "react";
 import NumberDisplay from "./NumberDisplay";
 import type { NumberFacts } from "@shared/schema";
 
-import './index.scss'
-
+import "./index.scss";
 
 interface NumberFactsCardProps {
   numberFacts: NumberFacts;
@@ -27,8 +26,7 @@ export default function FactsCard({
   const [activeFactIndex, setActiveFactIndex] = useState(currentFactIndex);
   const { number, facts } = numberFacts;
 
-
-  const handleFactChange = ({selected}: TabStripSelectEventArguments) => {
+  const handleFactChange = ({ selected }: TabStripSelectEventArguments) => {
     setActiveFactIndex(selected);
     onFactChange?.(selected);
   };
@@ -117,13 +115,16 @@ export default function FactsCard({
   return (
     <div className="space-y-4">
       {/* Tabs for Facts */}
-      <TabStrip selected={activeFactIndex} onSelect={handleFactChange} className="fact-card-tablist">
+      <TabStrip
+        selected={activeFactIndex}
+        onSelect={handleFactChange}
+        className="fact-card-tablist"
+      >
         {facts.map((fact, index) => (
           <TabStripTab
             key={fact.id}
             title={`Fact ${index + 1}`}
             data-testid={`tab-trigger-${number}-${index}`}
-            
             
           >
             <NumberDisplay fact={fact} />

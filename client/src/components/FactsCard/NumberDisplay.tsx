@@ -1,10 +1,7 @@
 import { Button } from "@progress/kendo-react-buttons";
-import { useState, useRef } from "react";
 import { Card } from "@progress/kendo-react-layout";
 import type { Fact } from "@shared/schema";
-import { Rerousel } from "rerousel";
 import { getCategoryColor } from "@/lib/utils";
-import { CATEGORIES } from "@/lib/constants";
 import Slider from "@ant-design/react-slick";
 
 // Import css files
@@ -43,6 +40,7 @@ export default function NumberDisplay({
 }: NumberDisplayProps) {
   // const [isExpanded, setIsExpanded] = useState(showFullDescription);
   const categoryStyles = getCategoryColor(fact.category);
+  console.log()
   return (
     <Card
       className={`shadcn-card rounded-xl border bg-card border-card-border text-card-foreground shadow-sm p-6 space-y-4 hover-elevate transition-all duration-200 ring-2 ${

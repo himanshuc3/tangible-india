@@ -7,10 +7,24 @@
         border-bottom: none;
     }
 
+
+    .k-tabstrip-item {
+        background-color: hsl(var(--secondary));
+        margin-right: 10px !important;
+        border: 2px solid transparent;
+    }
+    .k-tabstrip-items .k-tabstrip-item .k-link:hover{
+        background-color: hsl(var(--primary));
+        border-radius: 5px;
+    }
     .k-tabstrip-item.k-active{
+        background: none !important;
+    }
+    .k-tabstrip-item.k-active .k-link{
         border-radius: 5px;
         border: none;
-        background-color: var(--bg-card);
+        background-color: hsl(var(--primary));
+        color: hsl(var(--foreground));
     }
     .k-tabstrip-content{
         background:none;
