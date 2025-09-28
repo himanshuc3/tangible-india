@@ -4,17 +4,20 @@
     <meta charset="utf-8">
     <title>Tangible India</title>
     <script>
-      // Store the path and redirect to the base URL
-      sessionStorage.redirect = location.pathname;
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafgraph/spa-github-pages
+      // Store the current location and redirect to index
+      var segmentCount = 0;
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/tangible-india/' +
+        (l.pathname ? l.pathname.slice(1).split('/').slice(segmentCount).join('/') : '') +
+        (l.search ? '&' + l.search.slice(1) : '') +
+        l.hash
+      );
     </script>
-    <meta http-equiv="refresh" content="0;URL='/tangible-india/'">
   </head>
   <body>
-    <script>
-      // If this is a GitHub Pages 404, redirect to index
-      if (location.pathname !== '/tangible-india/') {
-        location.replace('/tangible-india/' + location.search + location.hash);
-      }
-    </script>
   </body>
 </html>
